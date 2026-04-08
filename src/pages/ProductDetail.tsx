@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, Star, Download, ShieldCheck, Clock, Check } from "lucide-react";
+import { ArrowLeft, Star, Download, ShieldCheck, Clock, Check, BadgeCheck } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -105,6 +105,13 @@ const ProductDetail = () => {
                 <span className="text-sm text-muted-foreground">
                   by <span className="text-foreground font-medium">{product.creator.name}</span>
                 </span>
+                <BadgeCheck size={16} className="text-primary" />
+              </div>
+
+              {/* Money-back guarantee */}
+              <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-primary/5 border border-primary/10 mb-6">
+                <ShieldCheck size={16} className="text-primary flex-shrink-0" />
+                <span className="text-xs font-medium text-primary">30-day money-back guarantee</span>
               </div>
 
               <p className="text-sm text-muted-foreground leading-relaxed mb-6">

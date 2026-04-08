@@ -1,8 +1,10 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import { TrustBar, SalesToast } from "@/components/TrustSignals";
 import BentoProducts from "@/components/BentoProducts";
 import Testimonials from "@/components/Testimonials";
 import Features from "@/components/Features";
+import EmailCapture from "@/components/EmailCapture";
 import Pricing from "@/components/Pricing";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
@@ -12,12 +14,15 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       <Hero />
+      <TrustBar />
       <BentoProducts />
       <Testimonials />
       <Features />
+      <EmailCapture />
       <Pricing />
       <CTA />
       <Footer />
+      <SalesToast />
     </div>
   );
 };
