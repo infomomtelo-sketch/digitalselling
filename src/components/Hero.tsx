@@ -1,95 +1,132 @@
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { Search, ArrowRight, Store, Briefcase, Code, Palette, Video, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+
+const categories = [
+  { icon: Palette, label: "Design Assets" },
+  { icon: Code, label: "Software" },
+  { icon: FileText, label: "Templates" },
+  { icon: Video, label: "Courses" },
+  { icon: Briefcase, label: "Services" },
+  { icon: Store, label: "All Products" },
+];
 
 const Hero = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden bg-background">
-      {/* Animated gradient orbs — Indigo style */}
+    <section className="relative pt-28 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-background">
+      {/* Subtle gradient backdrop */}
       <div className="absolute inset-0">
-        <div className="orb-float absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-[#4f46e5] opacity-20 blur-[120px]" />
-        <div className="orb-float-delayed absolute top-1/3 right-1/4 w-[400px] h-[400px] rounded-full bg-[#818cf8] opacity-15 blur-[100px]" />
-        <div className="orb-float-slow absolute bottom-1/4 left-1/3 w-[600px] h-[600px] rounded-full bg-[#1e1e5a] opacity-30 blur-[140px]" />
-        <div className="orb-float absolute bottom-1/3 right-1/3 w-[350px] h-[350px] rounded-full bg-[#6366f1] opacity-10 blur-[100px]" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[600px] bg-primary/8 rounded-full blur-[160px]" />
       </div>
 
-      {/* Subtle grain texture */}
-      <div className="absolute inset-0 opacity-[0.03] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI2EpIi8+PC9zdmc+')]" />
+      {/* Grid pattern overlay */}
+      <div className="absolute inset-0 opacity-[0.03]" style={{
+        backgroundImage: 'linear-gradient(hsl(var(--border)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px)',
+        backgroundSize: '60px 60px'
+      }} />
 
-      <div className="relative z-10 max-w-5xl mx-auto text-center">
+      <div className="relative z-10 max-w-6xl mx-auto">
+        {/* Platform badge */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="flex justify-center mb-8"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
         >
-          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/80 text-sm font-medium mb-10 border border-white/10">
-            <div className="w-2 h-2 rounded-full bg-[#818cf8] animate-pulse" />
-            12,000+ creators earning passively
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border bg-card text-muted-foreground text-xs font-medium">
+            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            Trusted by 12,000+ creators & freelancers
           </div>
         </motion.div>
 
+        {/* Headline */}
         <motion.h1
-          className="font-heading text-5xl sm:text-6xl lg:text-8xl font-bold tracking-tight text-white leading-[0.95]"
-          initial={{ opacity: 0, y: 40 }}
+          className="font-heading text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight text-foreground text-center leading-[1.05]"
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
-          Sell once.
+          Your digital store.
           <br />
-          <span className="magnetic-gradient-text">Earn forever.</span>
+          <span className="text-primary">Products & services.</span>
         </motion.h1>
 
         <motion.p
-          className="mt-8 text-lg sm:text-xl text-white/50 max-w-2xl mx-auto leading-relaxed"
+          className="mt-6 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto text-center leading-relaxed"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          transition={{ duration: 0.5, delay: 0.15 }}
         >
-          Upload your ebooks, courses, templates & software. Set your price.
-          Get paid instantly — no inventory, no shipping, no limits.
+          Sell digital products, offer freelance services, and build your brand — all from one storefront. Like Shopify meets Fiverr, built for creators.
         </motion.p>
 
+        {/* Search bar */}
         <motion.div
-          className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4"
+          className="mt-10 max-w-2xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          transition={{ duration: 0.5, delay: 0.25 }}
         >
-          <Link to="/auth">
-            <Button size="lg" className="text-base px-10 h-14 gap-2 rounded-full magnetic-gradient border-0 text-white font-semibold shadow-[0_0_40px_rgba(79,70,229,0.4)] hover:shadow-[0_0_60px_rgba(79,70,229,0.6)] transition-shadow">
-              Start selling free <ArrowRight size={18} />
-            </Button>
-          </Link>
-          <a href="#products">
-            <Button variant="outline" size="lg" className="text-base px-10 h-14 rounded-full bg-white/5 border-white/15 text-white hover:bg-white/10 hover:text-white backdrop-blur-sm">
-              Browse products
-            </Button>
-          </a>
+          <div className="relative flex items-center">
+            <Search size={20} className="absolute left-4 text-muted-foreground" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search products, services, templates, courses..."
+              className="w-full h-14 pl-12 pr-36 rounded-xl border border-border bg-card text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+            />
+            <Link to="/auth" className="absolute right-2">
+              <Button className="h-10 px-6 rounded-lg magnetic-gradient border-0 text-white font-semibold text-sm">
+                Start Selling
+              </Button>
+            </Link>
+          </div>
         </motion.div>
 
-        {/* Floating metrics */}
+        {/* Category pills */}
         <motion.div
-          className="mt-20 grid grid-cols-3 gap-4 max-w-lg mx-auto"
+          className="mt-6 flex flex-wrap items-center justify-center gap-2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.7 }}
+          transition={{ duration: 0.5, delay: 0.35 }}
+        >
+          {categories.map((cat) => (
+            <a
+              key={cat.label}
+              href="#products"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border bg-card/50 text-muted-foreground text-xs font-medium hover:border-primary/40 hover:text-foreground hover:bg-card transition-all"
+            >
+              <cat.icon size={14} />
+              {cat.label}
+            </a>
+          ))}
+        </motion.div>
+
+        {/* Stats row */}
+        <motion.div
+          className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-px rounded-xl overflow-hidden border border-border bg-border"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
         >
           {[
-            { value: "$18M+", label: "Paid out" },
+            { value: "$18M+", label: "Creator earnings" },
             { value: "2.4M+", label: "Products sold" },
-            { value: "0%", label: "Fees to start" },
+            { value: "12K+", label: "Active stores" },
+            { value: "5%", label: "Platform fee" },
           ].map((stat) => (
-            <div key={stat.label} className="text-center">
-              <p className="font-heading text-2xl sm:text-3xl font-bold text-white">{stat.value}</p>
-              <p className="text-xs text-white/40 mt-1">{stat.label}</p>
+            <div key={stat.label} className="bg-card px-6 py-5 text-center">
+              <p className="font-heading text-xl sm:text-2xl font-bold text-foreground">{stat.value}</p>
+              <p className="text-xs text-muted-foreground mt-1">{stat.label}</p>
             </div>
           ))}
         </motion.div>
       </div>
-
-      {/* Bottom fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
     </section>
   );
 };
