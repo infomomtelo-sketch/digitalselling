@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plus, Package, DollarSign, TrendingUp, Eye, LogOut, User, ChevronRight } from "lucide-react";
+import { Plus, Package, DollarSign, TrendingUp, LogOut, User, ChevronRight, Eye, EyeOff, Trash2 } from "lucide-react";
 import StripeConnectCard from "@/components/StripeConnectCard";
 import { useToast } from "@/hooks/use-toast";
 
@@ -64,6 +64,7 @@ const Dashboard = () => {
   }, [user]);
 
   const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this product?")) return;
     const { error } = await supabase.from("products").delete().eq("id", id);
     if (error) {
       toast({ title: "Error", description: error.message, variant: "destructive" });
@@ -85,7 +86,7 @@ const Dashboard = () => {
   if (authLoading || loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <p className="text-muted-foreground">Loading...</p>
+        <p className="text-lg text-muted-foreground">Loading...</p>
       </div>
     );
   }
@@ -94,29 +95,34 @@ const Dashboard = () => {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b border-border bg-background/80 backdrop-blur-xl sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-14">
           <Link to="/" className="font-heading text-xl font-bold tracking-tight text-foreground">
             dropvault<span className="text-primary">.</span>
           </Link>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <Link to="/dashboard/profile">
-              <Button variant="ghost" size="sm"><User size={16} className="mr-1" /> Profile</Button>
+              <Button variant="ghost" size="default" className="text-base">
+                <User size={18} className="mr-1.5" /> <span className="hidden sm:inline">Profile</span>
+              </Button>
             </Link>
-            <Button variant="ghost" size="sm" onClick={signOut}>
-              <LogOut size={16} className="mr-1" /> Sign out
+            <Button variant="ghost" size="default" className="text-base" onClick={signOut}>
+              <LogOut size={18} className="mr-1.5" /> <span className="hidden sm:inline">Sign out</span>
             </Button>
           </div>
         </div>
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex items-center justify-between mb-8">
+        {/* Page header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="font-heading text-2xl font-bold text-foreground">Creator Dashboard</h1>
-            <p className="text-sm text-muted-foreground mt-1">Manage your products and track sales</p>
+            <h1 className="font-heading text-3xl font-bold text-foreground">Dashboard</h1>
+            <p className="text-base text-muted-foreground mt-1">Manage your products and track sales</p>
           </div>
           <Link to="/dashboard/products/new">
-            <Button><Plus size={16} className="mr-1" /> New Product</Button>
+            <Button size="lg" className="text-base w-full sm:w-auto">
+              <Plus size={18} className="mr-1.5" /> New Product
+            </Button>
           </Link>
         </div>
 
@@ -129,78 +135,102 @@ const Dashboard = () => {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                <Package size={16} /> Products
+              <CardTitle className="text-base font-medium text-muted-foreground flex items-center gap-2">
+                <Package size={18} /> Products
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="font-heading text-2xl font-bold">{products.length}</p>
+              <p className="font-heading text-3xl font-bold">{products.length}</p>
             </CardContent>
           </Card>
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                <DollarSign size={16} /> Revenue
+              <CardTitle className="text-base font-medium text-muted-foreground flex items-center gap-2">
+                <DollarSign size={18} /> Revenue
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="font-heading text-2xl font-bold">${stats.total_revenue.toFixed(2)}</p>
+              <p className="font-heading text-3xl font-bold">${stats.total_revenue.toFixed(2)}</p>
             </CardContent>
           </Card>
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                <TrendingUp size={16} /> Orders
+              <CardTitle className="text-base font-medium text-muted-foreground flex items-center gap-2">
+                <TrendingUp size={18} /> Orders
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="font-heading text-2xl font-bold">{stats.total_orders}</p>
+              <p className="font-heading text-3xl font-bold">{stats.total_orders}</p>
             </CardContent>
           </Card>
         </div>
 
         {/* Products list */}
-        <h2 className="font-heading text-lg font-semibold text-foreground mb-4">Your Products</h2>
+        <h2 className="font-heading text-xl font-semibold text-foreground mb-4">Your Products</h2>
         {products.length === 0 ? (
           <Card className="p-12 text-center">
-            <Package size={40} className="mx-auto text-muted-foreground/40 mb-4" />
-            <p className="text-muted-foreground mb-4">No products yet. Create your first digital product!</p>
+            <Package size={48} className="mx-auto text-muted-foreground/40 mb-4" />
+            <p className="text-lg text-muted-foreground mb-4">No products yet. Create your first digital product!</p>
             <Link to="/dashboard/products/new">
-              <Button><Plus size={16} className="mr-1" /> Create Product</Button>
+              <Button size="lg" className="text-base">
+                <Plus size={18} className="mr-1.5" /> Create Product
+              </Button>
             </Link>
           </Card>
         ) : (
           <div className="space-y-3">
             {products.map((p) => (
-              <Card key={p.id} className="flex items-center gap-4 p-4">
-                <div className="w-14 h-14 rounded-lg bg-muted flex-shrink-0 overflow-hidden">
-                  {p.cover_image_url ? (
-                    <img src={p.cover_image_url} alt="" className="w-full h-full object-cover" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <Package size={20} className="text-muted-foreground/40" />
+              <Card key={p.id} className="p-4">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                  {/* Image + info */}
+                  <div className="flex items-center gap-4 flex-1 min-w-0">
+                    <div className="w-16 h-16 rounded-xl bg-muted flex-shrink-0 overflow-hidden">
+                      {p.cover_image_url ? (
+                        <img src={p.cover_image_url} alt="" className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <Package size={24} className="text-muted-foreground/40" />
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <h3 className="font-heading text-sm font-semibold truncate">{p.title}</h3>
-                    <Badge variant={p.is_published ? "default" : "secondary"} className="text-[10px]">
-                      {p.is_published ? "Live" : "Draft"}
-                    </Badge>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="font-heading text-base font-semibold truncate">{p.title}</h3>
+                        <Badge variant={p.is_published ? "default" : "secondary"} className="text-xs shrink-0">
+                          {p.is_published ? "Live" : "Draft"}
+                        </Badge>
+                      </div>
+                      <p className="text-sm text-muted-foreground">
+                        {p.category} · {p.price === 0 ? "Free" : `$${p.price}`} · {p.sales_count} sales
+                      </p>
+                    </div>
                   </div>
-                  <p className="text-xs text-muted-foreground">{p.category} · ${p.price} · {p.sales_count} sales</p>
-                </div>
-                <div className="flex items-center gap-2 flex-shrink-0">
-                  <Button variant="ghost" size="sm" onClick={() => togglePublish(p.id, p.is_published)}>
-                    <Eye size={14} className="mr-1" /> {p.is_published ? "Unpublish" : "Publish"}
-                  </Button>
-                  <Link to={`/dashboard/products/${p.id}`}>
-                    <Button variant="outline" size="sm">Edit <ChevronRight size={14} /></Button>
-                  </Link>
-                  <Button variant="ghost" size="sm" className="text-destructive" onClick={() => handleDelete(p.id)}>
-                    Delete
-                  </Button>
+
+                  {/* Actions */}
+                  <div className="flex items-center gap-2 flex-shrink-0 sm:ml-auto">
+                    <Button
+                      variant="ghost"
+                      size="default"
+                      className="text-sm"
+                      onClick={() => togglePublish(p.id, p.is_published)}
+                    >
+                      {p.is_published ? <EyeOff size={16} className="mr-1.5" /> : <Eye size={16} className="mr-1.5" />}
+                      {p.is_published ? "Unpublish" : "Publish"}
+                    </Button>
+                    <Link to={`/dashboard/products/${p.id}`}>
+                      <Button variant="outline" size="default" className="text-sm">
+                        Edit <ChevronRight size={16} className="ml-1" />
+                      </Button>
+                    </Link>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-destructive hover:text-destructive"
+                      onClick={() => handleDelete(p.id)}
+                    >
+                      <Trash2 size={18} />
+                    </Button>
+                  </div>
                 </div>
               </Card>
             ))}

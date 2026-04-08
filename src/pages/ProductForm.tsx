@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import { ArrowLeft, Upload, Image, Sparkles, DollarSign, Gift } from "lucide-react";
 
 const categories = ["Design Assets", "Software", "Online Course", "Templates", "E-book", "Other"];
@@ -53,8 +54,11 @@ const ProductForm = () => {
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [pricingType, setPricingType] = useState<"free" | "paid">("paid");
+  const [hasEdited, setHasEdited] = useState(false);
 
-  const [form, setForm] = useState({
+  useUnsavedChanges(hasEdited);
+
+  const [form, _setForm] = useState({
     title: "",
     description: "",
     long_description: "",
@@ -64,6 +68,11 @@ const ProductForm = () => {
     cover_image_url: "",
     file_url: "",
   });
+
+  const setForm: typeof _setForm = (val) => {
+    setHasEdited(true);
+    _setForm(val);
+  };
 
   useEffect(() => {
     if (!authLoading && !user) navigate("/auth");
@@ -144,6 +153,7 @@ const ProductForm = () => {
     if (error) {
       toast({ title: "Error", description: error.message, variant: "destructive" });
     } else {
+      setHasEdited(false);
       toast({ title: isEdit ? "Updated" : "Created", description: `Product ${isEdit ? "updated" : "created"} successfully.` });
       navigate("/dashboard");
     }
