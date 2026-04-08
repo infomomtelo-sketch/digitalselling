@@ -1,7 +1,8 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { BadgeCheck, Users, Heart, ArrowLeft, ExternalLink } from "lucide-react";
+import { BadgeCheck, Users, Heart, ArrowLeft } from "lucide-react";
+import ShareButtons from "@/components/ShareButtons";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useFollow } from "@/hooks/useFollow";
@@ -189,6 +190,10 @@ const CreatorProfile = () => {
                   <span className="text-muted-foreground">
                     <span className="font-semibold text-foreground">{totalSales}</span> sales
                   </span>
+                </div>
+
+                <div className="mt-3">
+                  <ShareButtons title={creator.display_name || "Creator"} />
                 </div>
               </div>
 
