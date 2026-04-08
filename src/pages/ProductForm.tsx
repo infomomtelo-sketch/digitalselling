@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import { ArrowLeft, Upload, Image, Sparkles, DollarSign, Gift } from "lucide-react";
 
 const categories = ["Design Assets", "Software", "Online Course", "Templates", "E-book", "Other"];
