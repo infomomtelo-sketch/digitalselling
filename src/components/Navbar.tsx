@@ -31,6 +31,7 @@ const Navbar = () => {
             <Link to="/creators" className={`text-sm font-medium ${mutedTextClass} transition-colors`}>Creators</Link>
             <a href="#features" className={`text-sm font-medium ${mutedTextClass} transition-colors`}>Features</a>
             <a href="#pricing" className={`text-sm font-medium ${mutedTextClass} transition-colors`}>Pricing</a>
+            <Link to="/services" className={`text-sm font-medium ${mutedTextClass} transition-colors`}>Services</Link>
           </div>
 
           <div className="hidden md:flex items-center gap-3">
@@ -57,6 +58,7 @@ const Navbar = () => {
             <Link to="/creators" className={`block text-sm font-medium ${mutedTextClass}`}>Creators</Link>
             <a href="#features" className={`block text-sm font-medium ${mutedTextClass}`}>Features</a>
             <a href="#pricing" className={`block text-sm font-medium ${mutedTextClass}`}>Pricing</a>
+            <Link to="/services" className={`block text-sm font-medium ${mutedTextClass}`}>Services</Link>
             <div className="flex gap-2 pt-2">
               {user ? (
                 <Link to="/dashboard"><Button size="sm">Dashboard</Button></Link>
