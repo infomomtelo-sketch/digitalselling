@@ -1,0 +1,157 @@
+import { FileText, Video, Palette, Code } from "lucide-react";
+
+export interface Product {
+  id: string;
+  title: string;
+  category: string;
+  price: string;
+  priceAmount: number;
+  sales: string;
+  rating: number;
+  icon: typeof Palette;
+  gradient: string;
+  iconColor: string;
+  span: string;
+  featured?: boolean;
+  description: string;
+  longDescription: string;
+  previews: string[];
+  features: string[];
+  creator: {
+    name: string;
+    avatar: string;
+  };
+}
+
+export const products: Product[] = [
+  {
+    id: "ultimate-ui-kit",
+    title: "Ultimate UI Kit",
+    category: "Design Assets",
+    price: "$49",
+    priceAmount: 49,
+    sales: "2.4k sales",
+    rating: 4.9,
+    icon: Palette,
+    gradient: "from-violet-500/20 to-fuchsia-500/20",
+    iconColor: "text-violet-600",
+    span: "col-span-2 row-span-2",
+    featured: true,
+    description: "A complete design system with 500+ components, built for modern SaaS products. Ship faster, look better.",
+    longDescription: "The Ultimate UI Kit is a comprehensive design system crafted for teams who want to ship beautiful SaaS products at lightning speed. With over 500 meticulously designed components across 40+ categories, you get everything from dashboards and onboarding flows to settings pages and empty states. Every component is fully responsive, dark-mode ready, and built on a flexible token system so you can rebrand in minutes. Whether you're a solo founder or a design team of 20, this kit eliminates hours of repetitive design work and ensures pixel-perfect consistency across your entire product.",
+    previews: [
+      "https://images.unsplash.com/photo-1545235617-9465d2a55698?w=800&q=80",
+      "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&q=80",
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80",
+    ],
+    features: ["500+ components", "Figma & Sketch files", "Dark mode support", "Auto-layout ready", "Regular updates", "Lifetime access"],
+    creator: { name: "Sarah Chen", avatar: "SC" },
+  },
+  {
+    id: "saas-starter",
+    title: "SaaS Starter",
+    category: "Software",
+    price: "$79",
+    priceAmount: 79,
+    sales: "890 sales",
+    rating: 4.8,
+    icon: Code,
+    gradient: "from-blue-500/20 to-cyan-500/20",
+    iconColor: "text-blue-600",
+    span: "col-span-1 row-span-1",
+    description: "Production-ready SaaS boilerplate with auth, billing, and dashboards built in.",
+    longDescription: "Stop building the same boilerplate over and over. SaaS Starter gives you a production-ready codebase with authentication (email, Google, GitHub), Stripe subscription billing, role-based access control, team management, and a polished dashboard — all pre-wired and ready to customize. Built with Next.js, TypeScript, Tailwind CSS, and Prisma. Deploy to Vercel in under 5 minutes. Includes comprehensive documentation, a private Discord community, and 12 months of updates.",
+    previews: [
+      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80",
+      "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&q=80",
+    ],
+    features: ["Auth & billing included", "TypeScript + Next.js", "Stripe integration", "Team management", "12 months updates", "Private Discord"],
+    creator: { name: "Alex Rivera", avatar: "AR" },
+  },
+  {
+    id: "video-editing-masterclass",
+    title: "Video Editing Masterclass",
+    category: "Online Course",
+    price: "$129",
+    priceAmount: 129,
+    sales: "1.2k sales",
+    rating: 4.9,
+    icon: Video,
+    gradient: "from-orange-500/20 to-amber-500/20",
+    iconColor: "text-orange-600",
+    span: "col-span-1 row-span-1",
+    description: "Learn professional video editing from scratch with 40+ hours of content.",
+    longDescription: "Go from complete beginner to confident video editor in this comprehensive masterclass. Covering DaVinci Resolve and Adobe Premiere Pro, you'll learn color grading, sound design, motion graphics, storytelling techniques, and workflow optimization. The course includes 40+ hours of video lessons, project files for every module, and a certificate of completion. Whether you want to start a YouTube channel, freelance as an editor, or produce content for your business — this course gives you the skills and confidence to create professional-quality videos.",
+    previews: [
+      "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&q=80",
+      "https://images.unsplash.com/photo-1536240478700-b869070f9279?w=800&q=80",
+    ],
+    features: ["40+ hours of content", "Project files included", "DaVinci + Premiere", "Certificate included", "Lifetime access", "Community forum"],
+    creator: { name: "Marcus Lee", avatar: "ML" },
+  },
+  {
+    id: "notion-finance-tracker",
+    title: "Notion Finance Tracker",
+    category: "Templates",
+    price: "$19",
+    priceAmount: 19,
+    sales: "5.1k sales",
+    rating: 4.7,
+    icon: FileText,
+    gradient: "from-emerald-500/20 to-teal-500/20",
+    iconColor: "text-emerald-600",
+    span: "col-span-1 row-span-1",
+    description: "Track income, expenses, and investments all in one beautiful Notion template.",
+    longDescription: "Take control of your finances with this beautifully designed Notion template. Track your income streams, categorize expenses, monitor investments, and visualize your net worth over time — all without leaving Notion. The template includes automated calculations, monthly and yearly views, budget tracking with progress bars, and a debt payoff planner. Perfect for freelancers, creators, and anyone who wants a clear picture of their financial health without the complexity of spreadsheets or dedicated finance apps.",
+    previews: [
+      "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80",
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+    ],
+    features: ["Auto-calculations", "Monthly & yearly views", "Budget tracking", "Debt payoff planner", "Investment tracker", "Quick setup guide"],
+    creator: { name: "Priya Sharma", avatar: "PS" },
+  },
+  {
+    id: "react-component-library",
+    title: "React Component Library",
+    category: "Software",
+    price: "$99",
+    priceAmount: 99,
+    sales: "640 sales",
+    rating: 4.8,
+    icon: Code,
+    gradient: "from-sky-500/20 to-indigo-500/20",
+    iconColor: "text-sky-600",
+    span: "col-span-2 row-span-1",
+    description: "50+ production-ready React components with TypeScript, tests, and Storybook docs.",
+    longDescription: "A battle-tested React component library designed for production applications. Every component is written in TypeScript with full type safety, thoroughly tested with React Testing Library, and documented in Storybook with interactive examples. Includes data tables with sorting/filtering/pagination, form components with validation, modals, toasts, navigation patterns, and more. Built on Tailwind CSS with a customizable theme system. Copy-paste or install via npm — your choice.",
+    previews: [
+      "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&q=80",
+      "https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=800&q=80",
+    ],
+    features: ["50+ components", "TypeScript-first", "Full test coverage", "Storybook docs", "Tailwind CSS theming", "npm or copy-paste"],
+    creator: { name: "Jordan Patel", avatar: "JP" },
+  },
+  {
+    id: "copywriting-playbook",
+    title: "Copywriting Playbook",
+    category: "E-book",
+    price: "$29",
+    priceAmount: 29,
+    sales: "3.3k sales",
+    rating: 4.6,
+    icon: FileText,
+    gradient: "from-rose-500/20 to-pink-500/20",
+    iconColor: "text-rose-600",
+    span: "col-span-1 row-span-1",
+    description: "200+ proven frameworks and templates to write copy that converts.",
+    longDescription: "Stop staring at blank pages. The Copywriting Playbook gives you 200+ battle-tested frameworks, templates, and swipe files for every type of copy you'll ever need — landing pages, emails, ads, social posts, product descriptions, and more. Each framework comes with real-world examples, fill-in-the-blank templates, and A/B testing insights from campaigns that generated millions in revenue. Whether you're a marketer, founder, or freelance writer, this playbook turns writing from a chore into a competitive advantage.",
+    previews: [
+      "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=800&q=80",
+      "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80",
+    ],
+    features: ["200+ frameworks", "Real-world examples", "Fill-in templates", "A/B test insights", "PDF + Notion format", "Bonus swipe files"],
+    creator: { name: "Emma Wilson", avatar: "EW" },
+  },
+];
+
+export const getProductById = (id: string) => products.find((p) => p.id === id);
