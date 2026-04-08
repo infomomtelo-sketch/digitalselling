@@ -85,8 +85,10 @@ const Services = () => {
     }
     setLoading(true);
     try {
+      const id = crypto.randomUUID();
       // Store the service request in the database
       const { error } = await supabase.from("service_requests").insert({
+        id,
         name: form.name,
         email: form.email,
         plan: form.plan || "Not specified",
@@ -94,7 +96,33 @@ const Services = () => {
         user_id: user?.id || null,
       });
       if (error) throw error;
-      toast({ title: "Request submitted!", description: "We'll get back to you within 24 hours." });
+
+      // Send confirmation email to the client
+      await supabase.functions.invoke("send-transactional-email", {
+        body: {
+          templateName: "service-request-confirmation",
+          recipientEmail: form.email,
+          idempotencyKey: `service-confirm-${id}`,
+          templateData: { name: form.name, plan: form.plan || "Not specified" },
+        },
+      });
+
+      // Send notification email to you (the owner)
+      await supabase.functions.invoke("send-transactional-email", {
+        body: {
+          templateName: "service-request-notification",
+          recipientEmail: form.email, // fallback; template.to overrides this
+          idempotencyKey: `service-notify-${id}`,
+          templateData: {
+            name: form.name,
+            email: form.email,
+            plan: form.plan || "Not specified",
+            details: form.details,
+          },
+        },
+      });
+
+      toast({ title: "Request submitted!", description: "We'll get back to you within 24 hours. Check your email for confirmation." });
       setForm({ name: "", email: "", plan: "", details: "" });
       setAgreedToTerms(false);
     } catch {
