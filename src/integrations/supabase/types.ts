@@ -276,6 +276,39 @@ export type Database = {
         }
         Relationships: []
       }
+      service_requests: {
+        Row: {
+          created_at: string
+          details: string
+          email: string
+          id: string
+          name: string
+          plan: string
+          status: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          details: string
+          email: string
+          id?: string
+          name: string
+          plan?: string
+          status?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          details?: string
+          email?: string
+          id?: string
+          name?: string
+          plan?: string
+          status?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       suppressed_emails: {
         Row: {
           created_at: string
