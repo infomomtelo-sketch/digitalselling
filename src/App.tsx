@@ -17,6 +17,7 @@ import TermsOfService from "./pages/TermsOfService.tsx";
 import CookiePolicy from "./pages/CookiePolicy.tsx";
 import ResetPassword from "./pages/ResetPassword.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import Services from "./pages/Services.tsx";
 
 const queryClient = new QueryClient();
 
