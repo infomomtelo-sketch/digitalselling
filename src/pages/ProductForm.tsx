@@ -215,27 +215,73 @@ const ProductForm = () => {
 
         {/* Product Templates - only for new products */}
         {!isEdit && (
-          <div className="mb-8">
-            <div className="flex items-center gap-2 mb-4">
+          <div className="mb-10">
+            <div className="flex items-center gap-2 mb-2">
               <Sparkles size={18} className="text-primary" />
-              <h2 className="text-lg font-heading font-semibold">Quick Start Templates</h2>
+              <h2 className="text-lg font-heading font-semibold">Pick a Template</h2>
             </div>
-            <div className="grid grid-cols-2 gap-3">
-              {productTemplates.map((t) => (
+            <p className="text-sm text-muted-foreground mb-4">Same quality as premium marketplaces — at a fraction of the price.</p>
+
+            {/* Tabs */}
+            <div className="flex gap-2 mb-4">
+              <button
+                type="button"
+                onClick={() => setTemplateTab("paid")}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  templateTab === "paid"
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-muted text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                💰 Paid Products ({productTemplates.paid.length})
+              </button>
+              <button
+                type="button"
+                onClick={() => setTemplateTab("free")}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  templateTab === "free"
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-muted text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                🎁 Free Products ({productTemplates.free.length})
+              </button>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {productTemplates[templateTab].map((t) => (
                 <button
                   key={t.title}
                   type="button"
                   onClick={() => applyTemplate(t)}
-                  className="text-left p-4 rounded-xl border border-border bg-card hover:border-primary/40 hover:bg-primary/5 transition-all"
+                  className="text-left p-4 rounded-xl border border-border bg-card hover:border-primary/40 hover:bg-primary/5 transition-all relative group"
                 >
+                  {t.tag && (
+                    <span className="absolute top-2 right-2 text-[10px] font-bold uppercase tracking-wider bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+                      {t.tag}
+                    </span>
+                  )}
                   <span className="text-2xl mb-2 block">{t.icon}</span>
-                  <p className="text-base font-semibold leading-tight">{t.title}</p>
-                  <p className="text-sm text-muted-foreground mt-1">{t.description}</p>
-                  <p className="text-sm font-medium text-primary mt-2">
+                  <p className="text-sm font-semibold leading-tight">{t.title}</p>
+                  <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{t.description}</p>
+                  <p className="text-sm font-bold text-primary mt-2">
                     {t.price === "0" ? "Free" : `$${t.price}`}
                   </p>
+                  {t.competitor && (
+                    <p className="text-[10px] text-muted-foreground line-through mt-0.5">{t.competitor}</p>
+                  )}
                 </button>
               ))}
+            </div>
+
+            <div className="mt-4 p-3 rounded-lg bg-primary/5 border border-primary/10 text-center">
+              <p className="text-sm text-muted-foreground">
+                Or <button type="button" className="text-primary font-medium underline underline-offset-2" onClick={() => {
+                  const el = document.getElementById("title");
+                  el?.focus();
+                  el?.scrollIntoView({ behavior: "smooth", block: "center" });
+                }}>start from scratch</button> — build anything you want.
+              </p>
             </div>
           </div>
         )}
