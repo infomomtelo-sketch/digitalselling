@@ -1,114 +1,78 @@
 import { motion } from "framer-motion";
-import { Star, Quote } from "lucide-react";
+import { Star, ArrowUpRight } from "lucide-react";
 
 const testimonials = [
   {
     name: "Sarah Chen",
     role: "UI Designer",
     avatar: "SC",
-    revenue: "$42,000+",
-    quote: "I uploaded my first UI kit on a whim. Six months later it's my main income stream. The passive revenue lets me focus on creating instead of chasing clients.",
-    product: "Ultimate UI Kit",
-    rating: 5,
+    revenue: "$42K+",
+    quote: "Uploaded my first UI kit on a whim. Six months later it's my main income stream.",
   },
   {
     name: "Marcus Lee",
     role: "Video Creator",
     avatar: "ML",
-    revenue: "$128,000+",
-    quote: "My editing course hit 1,000 sales in the first month. dropvault's checkout flow converts like crazy — I just focus on making great content.",
-    product: "Video Editing Masterclass",
-    rating: 5,
+    revenue: "$128K+",
+    quote: "My editing course hit 1,000 sales in the first month. The checkout converts like crazy.",
   },
   {
     name: "Priya Sharma",
     role: "Notion Creator",
     avatar: "PS",
-    revenue: "$89,000+",
-    quote: "I went from freelancing 60 hours a week to earning more from templates I built once. Last month I made $12k while on vacation.",
-    product: "Notion Finance Tracker",
-    rating: 5,
+    revenue: "$89K+",
+    quote: "Went from freelancing 60 hours/week to earning more from templates I built once.",
   },
   {
     name: "Jordan Patel",
     role: "Software Engineer",
     avatar: "JP",
-    revenue: "$63,000+",
-    quote: "Selling my component library here was the best decision I made. Zero marketing — the marketplace brings buyers to me. I just ship updates.",
-    product: "React Component Library",
-    rating: 5,
+    revenue: "$63K+",
+    quote: "Selling my component library was the best decision. The marketplace brings buyers to me.",
   },
-];
-
-const stats = [
-  { label: "Creators earning", value: "12,000+" },
-  { label: "Products sold", value: "2.4M+" },
-  { label: "Total paid out", value: "$18M+" },
-  { label: "Avg. creator revenue", value: "$1,500/mo" },
 ];
 
 const Testimonials = () => {
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-secondary/30 relative overflow-hidden">
-      <div className="absolute bottom-0 left-1/3 w-[600px] h-[600px] rounded-full bg-primary opacity-[0.03] blur-[150px]" />
-
-      <div className="max-w-7xl mx-auto relative z-10">
-        {/* Stats bar */}
-        <motion.div
-          className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-16 p-6 rounded-2xl border border-border bg-card"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          {stats.map((stat) => (
-            <div key={stat.label} className="text-center">
-              <p className="font-heading text-2xl sm:text-3xl font-bold text-foreground">{stat.value}</p>
-              <p className="text-xs text-muted-foreground mt-1">{stat.label}</p>
-            </div>
-          ))}
-        </motion.div>
-
-        <div className="text-center mb-12">
-          <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground">
-            Creators love dropvault
+    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/20 relative">
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-12">
+          <h2 className="font-heading text-2xl sm:text-3xl font-bold text-foreground">
+            Creators earning real revenue
           </h2>
-          <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
-            Real stories from creators who turned their skills into passive income.
+          <p className="mt-2 text-sm text-muted-foreground">
+            Real people, real results. Join thousands of creators building passive income.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {testimonials.map((t, i) => (
             <motion.div
               key={t.name}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="relative rounded-2xl border border-border bg-card p-6 hover:border-primary/20 transition-all"
+              transition={{ duration: 0.3, delay: i * 0.06 }}
+              className="rounded-xl border border-border bg-card p-5 flex flex-col"
             >
-              <Quote size={28} className="text-primary/10 absolute top-5 right-5" />
-
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-11 h-11 rounded-full magnetic-gradient flex items-center justify-center text-sm font-bold text-white">
+                <div className="w-9 h-9 rounded-full magnetic-gradient flex items-center justify-center text-xs font-bold text-white shrink-0">
                   {t.avatar}
                 </div>
-                <div>
-                  <p className="font-heading text-sm font-semibold text-foreground">{t.name}</p>
-                  <p className="text-xs text-muted-foreground">{t.role} · {t.product}</p>
+                <div className="min-w-0">
+                  <p className="font-heading text-xs font-semibold text-foreground">{t.name}</p>
+                  <p className="text-[10px] text-muted-foreground">{t.role}</p>
                 </div>
-                <div className="ml-auto text-right">
-                  <p className="font-heading text-sm font-bold magnetic-gradient-text">{t.revenue}</p>
-                  <div className="flex gap-0.5 justify-end mt-0.5">
-                    {Array.from({ length: t.rating }).map((_, j) => (
-                      <Star key={j} size={10} className="text-amber-500 fill-amber-500" />
+                <div className="ml-auto text-right shrink-0">
+                  <p className="font-heading text-sm font-bold text-primary">{t.revenue}</p>
+                  <div className="flex gap-0.5 justify-end">
+                    {Array.from({ length: 5 }).map((_, j) => (
+                      <Star key={j} size={8} className="text-amber-500 fill-amber-500" />
                     ))}
                   </div>
                 </div>
               </div>
-
-              <p className="text-sm text-muted-foreground leading-relaxed">{t.quote}</p>
+              <p className="text-xs text-muted-foreground leading-relaxed flex-1">"{t.quote}"</p>
             </motion.div>
           ))}
         </div>
