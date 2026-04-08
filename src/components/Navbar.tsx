@@ -18,8 +18,8 @@ const Navbar = () => {
 
           <div className="hidden md:flex items-center gap-8">
             <a href="#products" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Products</a>
+            <Link to="/creators" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Creators</Link>
             <a href="#features" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Features</a>
-            <a href="#creators" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">For Creators</a>
             <a href="#pricing" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Pricing</a>
           </div>
 
@@ -44,8 +44,8 @@ const Navbar = () => {
         {open && (
           <div className="md:hidden pb-4 border-t border-border mt-2 pt-4 space-y-3">
             <a href="#products" className="block text-sm font-medium text-muted-foreground">Products</a>
+            <Link to="/creators" className="block text-sm font-medium text-muted-foreground">Creators</Link>
             <a href="#features" className="block text-sm font-medium text-muted-foreground">Features</a>
-            <a href="#creators" className="block text-sm font-medium text-muted-foreground">For Creators</a>
             <a href="#pricing" className="block text-sm font-medium text-muted-foreground">Pricing</a>
             <div className="flex gap-2 pt-2">
               {user ? (
