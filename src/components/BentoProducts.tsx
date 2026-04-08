@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Star, Download, TrendingUp } from "lucide-react";
+import { Star, Download, TrendingUp, BadgeCheck, ShieldCheck } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { products } from "@/data/products";
@@ -65,13 +65,18 @@ const BentoProducts = () => {
                 )}
 
                 <div className="flex items-center justify-between mt-auto pt-4 border-t border-border">
-                  <span className="font-heading text-xl font-bold text-foreground">{product.price}</span>
+                  <div className="flex items-center gap-2">
+                    <span className="font-heading text-xl font-bold text-foreground">{product.price}</span>
+                    <span className="flex items-center gap-0.5 text-[10px] text-primary">
+                      <ShieldCheck size={10} /> Guaranteed
+                    </span>
+                  </div>
                   <div className="flex items-center gap-3 text-xs text-muted-foreground">
                     <span className="flex items-center gap-1">
                       <Star size={12} className="text-amber-500 fill-amber-500" /> {product.rating}
                     </span>
                     <span className="flex items-center gap-1">
-                      <Download size={12} /> {product.sales}
+                      <BadgeCheck size={12} className="text-primary" /> {product.sales}
                     </span>
                   </div>
                 </div>
