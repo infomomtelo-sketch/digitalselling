@@ -346,6 +346,54 @@ export type Database = {
         }
         Relationships: []
       }
+      seller_resources: {
+        Row: {
+          affiliate_url: string
+          badge: string | null
+          category: string
+          created_at: string
+          description: string | null
+          icon_url: string | null
+          id: string
+          is_free: boolean
+          partner_logo_url: string | null
+          partner_name: string
+          sort_order: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          affiliate_url: string
+          badge?: string | null
+          category?: string
+          created_at?: string
+          description?: string | null
+          icon_url?: string | null
+          id?: string
+          is_free?: boolean
+          partner_logo_url?: string | null
+          partner_name: string
+          sort_order?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          affiliate_url?: string
+          badge?: string | null
+          category?: string
+          created_at?: string
+          description?: string | null
+          icon_url?: string | null
+          id?: string
+          is_free?: boolean
+          partner_logo_url?: string | null
+          partner_name?: string
+          sort_order?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       service_requests: {
         Row: {
           brief: string | null
