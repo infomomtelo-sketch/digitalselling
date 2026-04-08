@@ -245,6 +245,8 @@ export type Database = {
           display_name: string | null
           id: string
           social_links: Json | null
+          stripe_account_id: string | null
+          stripe_onboarding_complete: boolean
           updated_at: string
           user_id: string
         }
@@ -255,6 +257,8 @@ export type Database = {
           display_name?: string | null
           id?: string
           social_links?: Json | null
+          stripe_account_id?: string | null
+          stripe_onboarding_complete?: boolean
           updated_at?: string
           user_id: string
         }
@@ -265,6 +269,8 @@ export type Database = {
           display_name?: string | null
           id?: string
           social_links?: Json | null
+          stripe_account_id?: string | null
+          stripe_onboarding_complete?: boolean
           updated_at?: string
           user_id?: string
         }

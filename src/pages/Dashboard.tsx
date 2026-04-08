@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus, Package, DollarSign, TrendingUp, Eye, LogOut, User, ChevronRight } from "lucide-react";
+import StripeConnectCard from "@/components/StripeConnectCard";
 import { useToast } from "@/hooks/use-toast";
 
 interface Product {
@@ -117,6 +118,11 @@ const Dashboard = () => {
           <Link to="/dashboard/products/new">
             <Button><Plus size={16} className="mr-1" /> New Product</Button>
           </Link>
+        </div>
+
+        {/* Stripe Connect */}
+        <div className="mb-8">
+          <StripeConnectCard />
         </div>
 
         {/* Stats */}
