@@ -12,38 +12,46 @@ import { useToast } from "@/hooks/use-toast";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import { ArrowLeft, Upload, Image, Sparkles, DollarSign, Gift } from "lucide-react";
 
-const categories = ["Design Assets", "Software", "Online Course", "Templates", "E-book", "Other"];
+const categories = ["Design Assets", "Software", "Online Course", "Templates", "E-book", "Music & Audio", "Photography", "Video", "3D Assets", "Fonts", "Notion Templates", "Figma Files", "Other"];
 
-const productTemplates = [
-  {
-    title: "UI Kit Template",
-    description: "A collection of reusable UI components",
-    category: "Design Assets",
-    price: "29",
-    icon: "🎨",
-  },
-  {
-    title: "Online Course",
-    description: "A comprehensive video course",
-    category: "Online Course",
-    price: "49",
-    icon: "🎓",
-  },
-  {
-    title: "Free Resource Pack",
-    description: "A free starter pack for your community",
-    category: "Templates",
-    price: "0",
-    icon: "🎁",
-  },
-  {
-    title: "E-book Guide",
-    description: "A detailed PDF guide",
-    category: "E-book",
-    price: "19",
-    icon: "📘",
-  },
-];
+type TemplateCategory = "free" | "paid";
+
+interface ProductTemplate {
+  title: string;
+  description: string;
+  category: string;
+  price: string;
+  icon: string;
+  tag?: string;
+  competitor?: string;
+}
+
+const productTemplates: Record<TemplateCategory, ProductTemplate[]> = {
+  free: [
+    { title: "Free Resource Pack", description: "Starter pack to grow your audience", category: "Templates", price: "0", icon: "🎁", tag: "Lead Magnet" },
+    { title: "Free Icon Set", description: "50+ vector icons for any project", category: "Design Assets", price: "0", icon: "✨", tag: "Popular" },
+    { title: "Free Wallpaper Pack", description: "HD wallpapers for desktop & mobile", category: "Design Assets", price: "0", icon: "🖼️" },
+    { title: "Free Notion Planner", description: "Weekly planner template for Notion", category: "Notion Templates", price: "0", icon: "📋", tag: "Trending" },
+    { title: "Free Preset Pack", description: "5 Lightroom presets for beginners", category: "Photography", price: "0", icon: "📷" },
+    { title: "Free Sound Kit", description: "10 royalty-free loops & samples", category: "Music & Audio", price: "0", icon: "🎵" },
+    { title: "Free Cheat Sheet", description: "Quick-reference PDF guide", category: "E-book", price: "0", icon: "📄", tag: "Lead Magnet" },
+    { title: "Free Figma UI Kit", description: "Basic components to kickstart designs", category: "Figma Files", price: "0", icon: "🎯" },
+  ],
+  paid: [
+    { title: "UI Kit Pro", description: "500+ production-ready components", category: "Design Assets", price: "29", icon: "🎨", tag: "Best Seller", competitor: "Others charge $59+" },
+    { title: "Online Course", description: "Full video course with certificates", category: "Online Course", price: "49", icon: "🎓", tag: "Popular", competitor: "Others charge $99+" },
+    { title: "E-book Guide", description: "In-depth PDF guide with templates", category: "E-book", price: "9", icon: "📘", competitor: "Others charge $19+" },
+    { title: "Notion Dashboard", description: "All-in-one workspace template", category: "Notion Templates", price: "12", icon: "🧩", tag: "Trending", competitor: "Others charge $29+" },
+    { title: "Figma Design System", description: "Complete design system with tokens", category: "Figma Files", price: "19", icon: "💎", competitor: "Others charge $49+" },
+    { title: "Lightroom Presets", description: "25 professional photo presets", category: "Photography", price: "14", icon: "📸", tag: "Popular", competitor: "Others charge $35+" },
+    { title: "Music Sample Pack", description: "100+ loops, stems & one-shots", category: "Music & Audio", price: "15", icon: "🎧", competitor: "Others charge $39+" },
+    { title: "Font Family", description: "Custom typeface with 6 weights", category: "Fonts", price: "19", icon: "🔤", competitor: "Others charge $49+" },
+    { title: "Video LUT Pack", description: "Cinematic color grades for video", category: "Video", price: "12", icon: "🎬", competitor: "Others charge $29+" },
+    { title: "3D Model Pack", description: "Low-poly assets for games & web", category: "3D Assets", price: "24", icon: "🧊", competitor: "Others charge $59+" },
+    { title: "SaaS Starter Kit", description: "Boilerplate code with auth & payments", category: "Software", price: "39", icon: "🚀", tag: "Best Seller", competitor: "Others charge $79+" },
+    { title: "WordPress Theme", description: "Responsive theme with page builder", category: "Software", price: "19", icon: "🌐", competitor: "Others charge $49+" },
+  ],
+};
 
 const ProductForm = () => {
   const { id } = useParams<{ id: string }>();
@@ -160,7 +168,7 @@ const ProductForm = () => {
     setSaving(false);
   };
 
-  const applyTemplate = (template: typeof productTemplates[0]) => {
+  const applyTemplate = (template: ProductTemplate) => {
     setForm((f) => ({
       ...f,
       title: template.title,
@@ -170,6 +178,8 @@ const ProductForm = () => {
     }));
     setPricingType(template.price === "0" ? "free" : "paid");
   };
+
+  const [templateTab, setTemplateTab] = useState<TemplateCategory>("paid");
 
   if (authLoading) return null;
 
@@ -205,27 +215,73 @@ const ProductForm = () => {
 
         {/* Product Templates - only for new products */}
         {!isEdit && (
-          <div className="mb-8">
-            <div className="flex items-center gap-2 mb-4">
+          <div className="mb-10">
+            <div className="flex items-center gap-2 mb-2">
               <Sparkles size={18} className="text-primary" />
-              <h2 className="text-lg font-heading font-semibold">Quick Start Templates</h2>
+              <h2 className="text-lg font-heading font-semibold">Pick a Template</h2>
             </div>
-            <div className="grid grid-cols-2 gap-3">
-              {productTemplates.map((t) => (
+            <p className="text-sm text-muted-foreground mb-4">Same quality as premium marketplaces — at a fraction of the price.</p>
+
+            {/* Tabs */}
+            <div className="flex gap-2 mb-4">
+              <button
+                type="button"
+                onClick={() => setTemplateTab("paid")}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  templateTab === "paid"
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-muted text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                💰 Paid Products ({productTemplates.paid.length})
+              </button>
+              <button
+                type="button"
+                onClick={() => setTemplateTab("free")}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  templateTab === "free"
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-muted text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                🎁 Free Products ({productTemplates.free.length})
+              </button>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {productTemplates[templateTab].map((t) => (
                 <button
                   key={t.title}
                   type="button"
                   onClick={() => applyTemplate(t)}
-                  className="text-left p-4 rounded-xl border border-border bg-card hover:border-primary/40 hover:bg-primary/5 transition-all"
+                  className="text-left p-4 rounded-xl border border-border bg-card hover:border-primary/40 hover:bg-primary/5 transition-all relative group"
                 >
+                  {t.tag && (
+                    <span className="absolute top-2 right-2 text-[10px] font-bold uppercase tracking-wider bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+                      {t.tag}
+                    </span>
+                  )}
                   <span className="text-2xl mb-2 block">{t.icon}</span>
-                  <p className="text-base font-semibold leading-tight">{t.title}</p>
-                  <p className="text-sm text-muted-foreground mt-1">{t.description}</p>
-                  <p className="text-sm font-medium text-primary mt-2">
+                  <p className="text-sm font-semibold leading-tight">{t.title}</p>
+                  <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{t.description}</p>
+                  <p className="text-sm font-bold text-primary mt-2">
                     {t.price === "0" ? "Free" : `$${t.price}`}
                   </p>
+                  {t.competitor && (
+                    <p className="text-[10px] text-muted-foreground line-through mt-0.5">{t.competitor}</p>
+                  )}
                 </button>
               ))}
+            </div>
+
+            <div className="mt-4 p-3 rounded-lg bg-primary/5 border border-primary/10 text-center">
+              <p className="text-sm text-muted-foreground">
+                Or <button type="button" className="text-primary font-medium underline underline-offset-2" onClick={() => {
+                  const el = document.getElementById("title");
+                  el?.focus();
+                  el?.scrollIntoView({ behavior: "smooth", block: "center" });
+                }}>start from scratch</button> — build anything you want.
+              </p>
             </div>
           </div>
         )}
