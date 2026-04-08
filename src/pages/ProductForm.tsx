@@ -54,6 +54,9 @@ const ProductForm = () => {
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [pricingType, setPricingType] = useState<"free" | "paid">("paid");
+  const [hasEdited, setHasEdited] = useState(false);
+
+  useUnsavedChanges(hasEdited);
 
   const [form, setForm] = useState({
     title: "",
