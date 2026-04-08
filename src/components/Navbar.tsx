@@ -6,14 +6,15 @@ import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const { user } = useAuth();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <a href="/" className="font-heading text-xl font-bold tracking-tight text-foreground">
+          <Link to="/" className="font-heading text-xl font-bold tracking-tight text-foreground">
             dropvault<span className="text-primary">.</span>
-          </a>
+          </Link>
 
           <div className="hidden md:flex items-center gap-8">
             <a href="#products" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Products</a>
@@ -23,8 +24,16 @@ const Navbar = () => {
           </div>
 
           <div className="hidden md:flex items-center gap-3">
-            <Button variant="ghost" size="sm" className="text-muted-foreground">Log in</Button>
-            <Button size="sm">Start Selling</Button>
+            {user ? (
+              <Link to="/dashboard">
+                <Button size="sm">Dashboard</Button>
+              </Link>
+            ) : (
+              <>
+                <Link to="/auth"><Button variant="ghost" size="sm" className="text-muted-foreground">Log in</Button></Link>
+                <Link to="/auth"><Button size="sm">Start Selling</Button></Link>
+              </>
+            )}
           </div>
 
           <button className="md:hidden text-foreground" onClick={() => setOpen(!open)}>
@@ -39,8 +48,14 @@ const Navbar = () => {
             <a href="#creators" className="block text-sm font-medium text-muted-foreground">For Creators</a>
             <a href="#pricing" className="block text-sm font-medium text-muted-foreground">Pricing</a>
             <div className="flex gap-2 pt-2">
-              <Button variant="ghost" size="sm">Log in</Button>
-              <Button size="sm">Start Selling</Button>
+              {user ? (
+                <Link to="/dashboard"><Button size="sm">Dashboard</Button></Link>
+              ) : (
+                <>
+                  <Link to="/auth"><Button variant="ghost" size="sm">Log in</Button></Link>
+                  <Link to="/auth"><Button size="sm">Start Selling</Button></Link>
+                </>
+              )}
             </div>
           </div>
         )}
