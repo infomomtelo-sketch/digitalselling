@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { MessageCircle, X, Send, Maximize2, Trash2 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useGeneralChat } from "@/hooks/useGeneralChat";
 import { Button } from "@/components/ui/button";
 import ReactMarkdown from "react-markdown";
