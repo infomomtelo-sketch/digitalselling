@@ -20,6 +20,8 @@ import NotFound from "./pages/NotFound.tsx";
 import Services from "./pages/Services.tsx";
 import Unsubscribe from "./pages/Unsubscribe.tsx";
 import Consultation from "./pages/Consultation.tsx";
+import Chat from "./pages/Chat.tsx";
+import ChatWidget from "./components/ChatWidget.tsx";
 
 const queryClient = new QueryClient();
 
