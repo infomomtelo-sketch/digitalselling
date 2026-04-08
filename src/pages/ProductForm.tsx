@@ -58,7 +58,7 @@ const ProductForm = () => {
 
   useUnsavedChanges(hasEdited);
 
-  const [form, setForm] = useState({
+  const [form, _setForm] = useState({
     title: "",
     description: "",
     long_description: "",
@@ -68,6 +68,11 @@ const ProductForm = () => {
     cover_image_url: "",
     file_url: "",
   });
+
+  const setForm: typeof _setForm = (val) => {
+    setHasEdited(true);
+    _setForm(val);
+  };
 
   useEffect(() => {
     if (!authLoading && !user) navigate("/auth");
