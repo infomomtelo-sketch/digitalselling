@@ -98,15 +98,15 @@ const ProductDetail = () => {
               </div>
 
               {/* Creator */}
-              <div className="flex items-center gap-3 mb-6">
+              <Link to={`/creator/${product.creator.id || ''}`} className="flex items-center gap-3 mb-6 group/creator">
                 <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-xs font-semibold text-primary">
                   {product.creator.avatar}
                 </div>
                 <span className="text-sm text-muted-foreground">
-                  by <span className="text-foreground font-medium">{product.creator.name}</span>
+                  by <span className="text-foreground font-medium group-hover/creator:text-primary transition-colors">{product.creator.name}</span>
                 </span>
                 <BadgeCheck size={16} className="text-primary" />
-              </div>
+              </Link>
 
               {/* Money-back guarantee */}
               <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-primary/5 border border-primary/10 mb-6">
