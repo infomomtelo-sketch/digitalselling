@@ -12,6 +12,9 @@ import ProductForm from "./pages/ProductForm.tsx";
 import Profile from "./pages/Profile.tsx";
 import CreatorProfile from "./pages/CreatorProfile.tsx";
 import Creators from "./pages/Creators.tsx";
+import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
+import TermsOfService from "./pages/TermsOfService.tsx";
+import CookiePolicy from "./pages/CookiePolicy.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -32,6 +35,9 @@ const App = () => (
             <Route path="/dashboard/profile" element={<Profile />} />
             <Route path="/creator/:id" element={<CreatorProfile />} />
             <Route path="/creators" element={<Creators />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
+            <Route path="/cookies" element={<CookiePolicy />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
