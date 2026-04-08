@@ -146,6 +146,11 @@ const ProductDetail = () => {
                   ))}
                 </ul>
               </div>
+
+              {/* Share */}
+              <div className="mt-6 pt-4 border-t border-border">
+                <ShareButtons title={product.title} />
+              </div>
             </motion.div>
           </div>
 
