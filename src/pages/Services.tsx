@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Globe, Rocket, Shield, Headphones, Check, Send, Zap, Eye, Code, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -64,6 +64,7 @@ const plans = [
 const Services = () => {
   const { toast } = useToast();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [form, setForm] = useState({
@@ -122,9 +123,10 @@ const Services = () => {
         },
       });
 
-      toast({ title: "Request submitted!", description: "We'll get back to you within 24 hours. Check your email for confirmation." });
+      toast({ title: "Request submitted!", description: "Starting your AI consultation..." });
       setForm({ name: "", email: "", plan: "", details: "" });
       setAgreedToTerms(false);
+      navigate(`/consultation/${id}`);
     } catch {
       toast({ title: "Submitted!", description: "We'll review your request and reach out soon." });
       setForm({ name: "", email: "", plan: "", details: "" });
