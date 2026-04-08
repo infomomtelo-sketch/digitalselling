@@ -1,4 +1,4 @@
-import { FileText, Video, Palette, Code } from "lucide-react";
+import { FileText, Video, Palette, Code, LayoutTemplate, Briefcase } from "lucide-react";
 
 export interface Product {
   id: string;
