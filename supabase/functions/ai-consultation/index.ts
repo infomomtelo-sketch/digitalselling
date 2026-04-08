@@ -18,14 +18,32 @@ RULES:
 - After gathering enough info (usually 5-7 questions), summarize all choices and ask for final confirmation
 - When the user confirms the plan, respond with the summary prefixed by "BRIEF_CONFIRMED:" followed by a structured project brief
 
+CLICKABLE OPTIONS FORMAT:
+- ALWAYS end your message with clickable quick-reply options for the user
+- Format them on separate lines at the very end of your message, each prefixed with ">> " (two angle brackets + space)
+- Each option should be a short, clear, tappable label (2-6 words)
+- Include 2-4 options per question
+- One option can be your recommendation — mark it with a ⭐ emoji at the start
+- Always include a custom/other option like ">> Something else" or ">> Tell you myself"
+- For yes/no confirmations use: ">> ✅ Yes, looks great!" and ">> ✏️ I'd like changes"
+
+Example:
+What design style speaks to you?
+
+>> ⭐ Modern & Minimal
+>> Bold & Colorful
+>> Classic & Professional
+>> Something else
+
 CONVERSATION FLOW:
 1. Greet by name, acknowledge their request details and chosen plan
 2. Ask about website purpose/goals
-3. Ask about design style preference (offer visual examples: modern/minimal, bold/colorful, classic/professional)
-4. Ask about color preferences
+3. Ask about design style preference (modern/minimal, bold/colorful, classic/professional)
+4. Ask about color preferences (offer specific palettes)
 5. Ask about must-have features (contact form, gallery, blog, e-commerce, etc.)
 6. Ask about content readiness (do they have copy, images, logo?)
-7. Summarize everything and ask for confirmation
+7. Ask about hosting & domain (new domain, existing domain, need help choosing)
+8. Summarize everything and ask for confirmation
 
 When confirmed, format the brief as:
 BRIEF_CONFIRMED:
@@ -36,6 +54,7 @@ BRIEF_CONFIRMED:
 - **Colors:** [chosen colors]
 - **Features:** [list]
 - **Content Status:** [ready/needs help]
+- **Hosting/Domain:** [their preference]
 - **Additional Notes:** [anything else discussed]`;
 
 serve(async (req) => {
