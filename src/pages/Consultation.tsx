@@ -258,7 +258,34 @@ const Consultation = () => {
     }
   };
 
-  const cleanContent = (content: string) => content.replace("BRIEF_CONFIRMED:", "").trim();
+  // Parse message content to separate text from quick-reply options
+  const parseMessage = (content: string) => {
+    const cleaned = content.replace("BRIEF_CONFIRMED:", "").trim();
+    const lines = cleaned.split("\n");
+    const textLines: string[] = [];
+    const options: string[] = [];
+
+    for (const line of lines) {
+      if (line.trim().startsWith(">> ")) {
+        options.push(line.trim().slice(3).trim());
+      } else {
+        textLines.push(line);
+      }
+    }
+
+    return {
+      text: textLines.join("\n").trim(),
+      options,
+    };
+  };
+
+  const handleQuickReply = (option: string) => {
+    if (isLoading || briefConfirmed) return;
+    setInput("");
+    setMessages((prev) => [...prev, { role: "user", content: option }]);
+    setShowCreditStore(false);
+    streamMessage(option);
+  };
 
   const freeRemaining = Math.max(0, credits.free_total - credits.free_used);
   const totalRemaining = freeRemaining + credits.paid_remaining;
