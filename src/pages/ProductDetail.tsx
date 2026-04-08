@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Star, Download, ShieldCheck, Clock, Check, BadgeCheck } from "lucide-react";
+import ShareButtons from "@/components/ShareButtons";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
