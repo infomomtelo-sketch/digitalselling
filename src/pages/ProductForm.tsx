@@ -122,10 +122,18 @@ const ProductForm = () => {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b border-border bg-background/80 backdrop-blur-xl sticky top-0 z-50">
-        <div className="max-w-3xl mx-auto px-4 flex items-center h-16">
-          <Link to="/dashboard" className="text-sm text-muted-foreground hover:text-foreground flex items-center gap-1">
-            <ArrowLeft size={16} /> Back to dashboard
+        <div className="max-w-3xl mx-auto px-4 flex items-center justify-between h-14">
+          <Link to="/dashboard" className="text-sm text-muted-foreground hover:text-foreground flex items-center gap-1.5 transition-colors">
+            <ArrowLeft size={16} /> Dashboard
           </Link>
+          <div className="flex items-center gap-2">
+            <Link to="/dashboard">
+              <Button type="button" variant="ghost" size="sm">Cancel</Button>
+            </Link>
+            <Button size="sm" disabled={saving || !form.title} onClick={handleSubmit}>
+              {saving ? "Saving..." : isEdit ? "Update" : "Create Product"}
+            </Button>
+          </div>
         </div>
       </header>
 
@@ -250,13 +258,14 @@ const ProductForm = () => {
             <Label>Publish immediately</Label>
           </div>
 
-          <div className="flex gap-3">
-            <Button type="submit" disabled={saving}>
+          {/* Bottom action bar */}
+          <div className="flex items-center justify-between pt-4 border-t border-border">
+            <Link to="/dashboard">
+              <Button type="button" variant="ghost">← Back to Dashboard</Button>
+            </Link>
+            <Button type="submit" disabled={saving || !form.title}>
               {saving ? "Saving..." : isEdit ? "Update Product" : "Create Product"}
             </Button>
-            <Link to="/dashboard">
-              <Button type="button" variant="outline">Cancel</Button>
-            </Link>
           </div>
         </form>
       </main>
