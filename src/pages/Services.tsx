@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Globe, Rocket, Shield, Headphones, Check, Send, Zap, Eye, Code } from "lucide-react";
+import { ArrowLeft, Globe, Rocket, Shield, Headphones, Check, Send, Zap, Eye, Code, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -64,6 +65,7 @@ const Services = () => {
   const { toast } = useToast();
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -75,6 +77,10 @@ const Services = () => {
     e.preventDefault();
     if (!form.name || !form.email || !form.details) {
       toast({ title: "Please fill in all required fields", variant: "destructive" });
+      return;
+    }
+    if (!agreedToTerms) {
+      toast({ title: "Please agree to the terms before submitting", variant: "destructive" });
       return;
     }
     setLoading(true);
@@ -90,9 +96,11 @@ const Services = () => {
       if (error) throw error;
       toast({ title: "Request submitted!", description: "We'll get back to you within 24 hours." });
       setForm({ name: "", email: "", plan: "", details: "" });
+      setAgreedToTerms(false);
     } catch {
       toast({ title: "Submitted!", description: "We'll review your request and reach out soon." });
       setForm({ name: "", email: "", plan: "", details: "" });
+      setAgreedToTerms(false);
     } finally {
       setLoading(false);
     }
@@ -281,7 +289,38 @@ const Services = () => {
                 placeholder="Describe what you need: type of website, features, design preferences, deadline..."
               />
             </div>
-            <Button type="submit" className="w-full" disabled={loading}>
+
+            {/* Terms Agreement */}
+            <div className="rounded-xl border border-border bg-muted/30 p-4 space-y-3">
+              <div className="flex items-center gap-2 text-sm font-medium">
+                <FileText className="h-4 w-4 text-primary" />
+                Service Agreement
+              </div>
+              <div className="text-xs text-muted-foreground space-y-2">
+                <p>By submitting this request, you agree to the following terms:</p>
+                <ul className="list-disc pl-4 space-y-1">
+                  <li><strong>Payment before work begins</strong> — Full payment is required before we start building your website.</li>
+                  <li><strong>Scope agreement</strong> — We'll agree on a detailed scope document before development starts. Changes outside the agreed scope may incur additional charges.</li>
+                  <li><strong>Revision rounds</strong> — Your plan includes a set number of revision rounds (see plan details above).</li>
+                  <li><strong>Satisfaction guarantee</strong> — If you're not happy with the final result, we'll provide <strong>1 additional revision round at no extra cost</strong> to address your concerns.</li>
+                  <li><strong>Code ownership</strong> — Once payment is complete, you own 100% of the source code.</li>
+                  <li><strong>Timeline</strong> — Estimated delivery is 7–14 business days depending on complexity.</li>
+                </ul>
+                <p>A formal agreement will be sent to your email for signature before any work or payment is processed.</p>
+              </div>
+              <div className="flex items-start gap-2 pt-1">
+                <Checkbox
+                  id="terms"
+                  checked={agreedToTerms}
+                  onCheckedChange={(checked) => setAgreedToTerms(checked === true)}
+                />
+                <label htmlFor="terms" className="text-sm cursor-pointer leading-snug">
+                  I understand and agree to these terms *
+                </label>
+              </div>
+            </div>
+
+            <Button type="submit" className="w-full" disabled={loading || !agreedToTerms}>
               <Send className="h-4 w-4 mr-2" />
               {loading ? "Submitting..." : "Submit Request"}
             </Button>
