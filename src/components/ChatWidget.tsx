@@ -12,6 +12,10 @@ const ChatWidget = () => {
   const { messages, isLoading, sendMessage, clearMessages } = useGeneralChat();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const location = useLocation();
+
+  // Hide on full chat page
+  if (location.pathname === "/chat") return null;
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
