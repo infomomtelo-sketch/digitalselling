@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const CTA = () => {
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-8">
+    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-[#0d0f1a]">
       <motion.div
         className="max-w-5xl mx-auto text-center rounded-[2rem] p-12 sm:p-20 relative overflow-hidden magnetic-gradient"
         initial={{ opacity: 0, y: 30 }}
@@ -49,7 +49,7 @@ const CTA = () => {
             transition={{ duration: 0.5, delay: 0.3 }}
           >
             <Link to="/auth">
-              <Button size="lg" className="text-base px-10 h-14 rounded-full bg-white text-foreground font-semibold hover:bg-white/90 shadow-[0_10px_40px_rgba(0,0,0,0.2)] gap-2">
+              <Button size="lg" className="text-base px-10 h-14 rounded-full bg-white text-[#0a0c16] font-semibold hover:bg-white/90 shadow-[0_10px_40px_rgba(0,0,0,0.3)] gap-2">
                 Create your store <ArrowRight size={18} />
               </Button>
             </Link>

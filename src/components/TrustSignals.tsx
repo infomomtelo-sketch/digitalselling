@@ -15,18 +15,18 @@ const recentSales = [
 
 const TrustBar = () => {
   return (
-    <section className="py-6 px-4 sm:px-6 lg:px-8 border-b border-border bg-muted/50">
-      <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-sm text-muted-foreground">
+    <section className="py-6 px-4 sm:px-6 lg:px-8 border-b border-white/10 bg-[#0d0f1a]">
+      <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-sm text-white/50">
         <div className="flex items-center gap-2">
-          <ShieldCheck size={18} className="text-primary" />
+          <ShieldCheck size={18} className="text-[#5856d6]" />
           <span>30-day money-back guarantee</span>
         </div>
         <div className="flex items-center gap-2">
-          <BadgeCheck size={18} className="text-primary" />
+          <BadgeCheck size={18} className="text-[#af52de]" />
           <span>Verified creators & reviews</span>
         </div>
         <div className="flex items-center gap-2">
-          <Zap size={18} className="text-primary" />
+          <Zap size={18} className="text-[#ff6b35]" />
           <span>Instant digital delivery</span>
         </div>
       </div>
@@ -68,16 +68,16 @@ const SalesToast = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.3 }}
-            className="bg-card border border-border rounded-xl p-3 shadow-lg backdrop-blur-sm flex items-center gap-3"
+            className="bg-[#1a1d2e] border border-white/10 rounded-xl p-3 shadow-lg backdrop-blur-sm flex items-center gap-3"
           >
             <div className="w-9 h-9 rounded-full magnetic-gradient flex items-center justify-center flex-shrink-0">
               <span className="text-white text-xs font-bold">{sale.buyer.charAt(0)}</span>
             </div>
             <div className="min-w-0">
-              <p className="text-xs font-semibold text-foreground truncate">
-                {sale.buyer} purchased <span className="text-primary">{sale.product}</span>
+              <p className="text-xs font-semibold text-white truncate">
+                {sale.buyer} purchased <span className="text-[#af52de]">{sale.product}</span>
               </p>
-              <p className="text-[10px] text-muted-foreground">{sale.price} · {sale.time}</p>
+              <p className="text-[10px] text-white/40">{sale.price} · {sale.time}</p>
             </div>
           </motion.div>
         )}
