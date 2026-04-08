@@ -14,9 +14,6 @@ const ChatWidget = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const location = useLocation();
 
-  // Hide on full chat page
-  if (location.pathname === "/chat") return null;
-
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -24,6 +21,9 @@ const ChatWidget = () => {
   useEffect(() => {
     if (isOpen) inputRef.current?.focus();
   }, [isOpen]);
+
+  // Hide on full chat page
+  if (location.pathname === "/chat") return null;
 
   const handleSend = () => {
     const trimmed = input.trim();
