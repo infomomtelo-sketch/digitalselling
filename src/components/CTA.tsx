@@ -1,35 +1,59 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const CTA = () => {
   return (
     <section className="py-24 px-4 sm:px-6 lg:px-8">
       <motion.div
-        className="max-w-4xl mx-auto text-center rounded-3xl bg-foreground p-12 sm:p-16 relative overflow-hidden"
+        className="max-w-5xl mx-auto text-center rounded-[2rem] p-12 sm:p-20 relative overflow-hidden magnetic-gradient"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.6 }}
       >
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--primary)/0.1)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--primary)/0.1)_1px,transparent_1px)] bg-[size:3rem_3rem]" />
-        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-48 h-48 bg-primary/10 rounded-full blur-3xl" />
+        {/* Orbs */}
+        <div className="absolute top-0 right-0 w-80 h-80 bg-white/10 rounded-full blur-[80px] orb-float" />
+        <div className="absolute bottom-0 left-0 w-60 h-60 bg-white/10 rounded-full blur-[60px] orb-float-delayed" />
+
+        {/* Grain */}
+        <div className="absolute inset-0 opacity-[0.04] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI2EpIi8+PC9zdmc+')]" />
 
         <div className="relative z-10">
-          <h2 className="font-heading text-3xl sm:text-4xl font-bold text-background leading-tight">
-            Start earning while you sleep.
+          <motion.h2
+            className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.05]"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            Start earning
             <br />
-            <span className="text-primary">It takes 5 minutes.</span>
-          </h2>
-          <p className="mt-6 text-background/70 max-w-lg mx-auto">
+            while you sleep.
+          </motion.h2>
+          <motion.p
+            className="mt-6 text-white/70 text-lg max-w-lg mx-auto"
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
             Join 12,000+ creators who turned their skills into products — and their products into passive income.
-          </p>
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button size="lg" className="text-base px-8 h-12 gap-2">
-              Create your store <ArrowRight size={16} />
-            </Button>
-          </div>
+          </motion.p>
+          <motion.div
+            className="mt-10"
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            <Link to="/auth">
+              <Button size="lg" className="text-base px-10 h-14 rounded-full bg-white text-foreground font-semibold hover:bg-white/90 shadow-[0_10px_40px_rgba(0,0,0,0.2)] gap-2">
+                Create your store <ArrowRight size={18} />
+              </Button>
+            </Link>
+          </motion.div>
         </div>
       </motion.div>
     </section>
