@@ -11,6 +11,7 @@ import Dashboard from "./pages/Dashboard.tsx";
 import ProductForm from "./pages/ProductForm.tsx";
 import Profile from "./pages/Profile.tsx";
 import CreatorProfile from "./pages/CreatorProfile.tsx";
+import Creators from "./pages/Creators.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/dashboard/products/:id" element={<ProductForm />} />
             <Route path="/dashboard/profile" element={<Profile />} />
             <Route path="/creator/:id" element={<CreatorProfile />} />
+            <Route path="/creators" element={<Creators />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
