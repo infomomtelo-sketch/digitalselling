@@ -49,15 +49,15 @@ const plans = [
 
 const Pricing = () => {
   return (
-    <section id="pricing" className="py-24 px-4 sm:px-6 lg:px-8 bg-[#0a0c16] relative overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full bg-[#5856d6] opacity-[0.04] blur-[150px]" />
+    <section id="pricing" className="py-24 px-4 sm:px-6 lg:px-8 bg-secondary/30 relative overflow-hidden">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full bg-primary opacity-[0.04] blur-[150px]" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
-          <h2 className="font-heading text-3xl sm:text-4xl font-bold text-white">
+          <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground">
             Simple, transparent pricing
           </h2>
-          <p className="mt-4 text-white/50 max-w-xl mx-auto">
+          <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
             Start free. Scale when you're ready. No hidden fees, ever.
           </p>
         </div>
@@ -68,8 +68,8 @@ const Pricing = () => {
               key={plan.name}
               className={`relative rounded-2xl border p-8 ${
                 plan.popular
-                  ? "border-[#5856d6]/50 bg-[#12152a] shadow-xl shadow-[#5856d6]/10 scale-[1.02]"
-                  : "border-white/10 bg-white/[0.03]"
+                  ? "border-primary/40 bg-card shadow-xl shadow-primary/10 scale-[1.02]"
+                  : "border-border bg-card"
               }`}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -82,17 +82,17 @@ const Pricing = () => {
                 </Badge>
               )}
 
-              <h3 className="font-heading text-lg font-semibold text-white">{plan.name}</h3>
+              <h3 className="font-heading text-lg font-semibold text-card-foreground">{plan.name}</h3>
               <div className="mt-4 flex items-baseline gap-1">
-                <span className="font-heading text-4xl font-bold text-white">{plan.price}</span>
-                <span className="text-sm text-white/40">{plan.period}</span>
+                <span className="font-heading text-4xl font-bold text-foreground">{plan.price}</span>
+                <span className="text-sm text-muted-foreground">{plan.period}</span>
               </div>
-              <p className="mt-3 text-sm text-white/50">{plan.description}</p>
+              <p className="mt-3 text-sm text-muted-foreground">{plan.description}</p>
 
               <ul className="mt-8 space-y-3">
                 {plan.features.map((feature) => (
-                  <li key={feature} className="flex items-center gap-3 text-sm text-white/70">
-                    <Check size={16} className="text-[#5856d6] shrink-0" />
+                  <li key={feature} className="flex items-center gap-3 text-sm text-card-foreground">
+                    <Check size={16} className="text-primary shrink-0" />
                     {feature}
                   </li>
                 ))}
@@ -102,8 +102,8 @@ const Pricing = () => {
                 variant={plan.popular ? "default" : "outline"}
                 className={`w-full mt-8 gap-2 ${
                   plan.popular
-                    ? "magnetic-gradient border-0 text-white shadow-[0_0_30px_rgba(255,45,85,0.2)]"
-                    : "border-white/15 text-white/70 bg-white/5 hover:bg-white/10 hover:text-white"
+                    ? "magnetic-gradient border-0 text-white shadow-[0_0_30px_rgba(79,70,229,0.3)]"
+                    : ""
                 }`}
                 size="lg"
               >

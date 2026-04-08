@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden bg-foreground">
-      {/* Animated gradient orbs — Apple Music style */}
+    <section className="relative min-h-[90vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden bg-background">
+      {/* Animated gradient orbs — Indigo style */}
       <div className="absolute inset-0">
-        <div className="orb-float absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-[#ff2d55] opacity-30 blur-[120px]" />
-        <div className="orb-float-delayed absolute top-1/3 right-1/4 w-[400px] h-[400px] rounded-full bg-[#af52de] opacity-25 blur-[100px]" />
-        <div className="orb-float-slow absolute bottom-1/4 left-1/3 w-[600px] h-[600px] rounded-full bg-[#5856d6] opacity-20 blur-[140px]" />
-        <div className="orb-float absolute bottom-1/3 right-1/3 w-[350px] h-[350px] rounded-full bg-[#ff6b35] opacity-20 blur-[100px]" />
+        <div className="orb-float absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-[#4f46e5] opacity-20 blur-[120px]" />
+        <div className="orb-float-delayed absolute top-1/3 right-1/4 w-[400px] h-[400px] rounded-full bg-[#818cf8] opacity-15 blur-[100px]" />
+        <div className="orb-float-slow absolute bottom-1/4 left-1/3 w-[600px] h-[600px] rounded-full bg-[#1e1e5a] opacity-30 blur-[140px]" />
+        <div className="orb-float absolute bottom-1/3 right-1/3 w-[350px] h-[350px] rounded-full bg-[#6366f1] opacity-10 blur-[100px]" />
       </div>
 
       {/* Subtle grain texture */}
@@ -24,7 +24,7 @@ const Hero = () => {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
           <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/80 text-sm font-medium mb-10 border border-white/10">
-            <div className="w-2 h-2 rounded-full bg-[#34c759] animate-pulse" />
+            <div className="w-2 h-2 rounded-full bg-[#818cf8] animate-pulse" />
             12,000+ creators earning passively
           </div>
         </motion.div>
@@ -41,7 +41,7 @@ const Hero = () => {
         </motion.h1>
 
         <motion.p
-          className="mt-8 text-lg sm:text-xl text-white/60 max-w-2xl mx-auto leading-relaxed"
+          className="mt-8 text-lg sm:text-xl text-white/50 max-w-2xl mx-auto leading-relaxed"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
@@ -57,7 +57,7 @@ const Hero = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           <Link to="/auth">
-            <Button size="lg" className="text-base px-10 h-14 gap-2 rounded-full magnetic-gradient border-0 text-white font-semibold shadow-[0_0_40px_rgba(255,45,85,0.3)] hover:shadow-[0_0_60px_rgba(255,45,85,0.5)] transition-shadow">
+            <Button size="lg" className="text-base px-10 h-14 gap-2 rounded-full magnetic-gradient border-0 text-white font-semibold shadow-[0_0_40px_rgba(79,70,229,0.4)] hover:shadow-[0_0_60px_rgba(79,70,229,0.6)] transition-shadow">
               Start selling free <ArrowRight size={18} />
             </Button>
           </Link>
@@ -88,7 +88,7 @@ const Hero = () => {
         </motion.div>
       </div>
 
-      {/* Bottom fade into content */}
+      {/* Bottom fade */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
     </section>
   );

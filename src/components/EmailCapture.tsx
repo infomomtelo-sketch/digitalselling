@@ -19,7 +19,7 @@ const EmailCapture = () => {
   };
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#0d0f1a]">
+    <section className="py-20 px-4 sm:px-6 lg:px-8">
       <motion.div
         className="max-w-2xl mx-auto text-center"
         initial={{ opacity: 0, y: 20 }}
@@ -31,10 +31,10 @@ const EmailCapture = () => {
           <Mail size={24} className="text-white" />
         </div>
 
-        <h2 className="font-heading text-2xl sm:text-3xl font-bold text-white">
+        <h2 className="font-heading text-2xl sm:text-3xl font-bold text-foreground">
           Get creator tips & hot drops
         </h2>
-        <p className="mt-3 text-white/50 max-w-md mx-auto">
+        <p className="mt-3 text-muted-foreground max-w-md mx-auto">
           Join 8,000+ creators getting weekly tips on building passive income with digital products. No spam, unsubscribe anytime.
         </p>
 
@@ -42,7 +42,7 @@ const EmailCapture = () => {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="mt-8 p-4 rounded-xl bg-[#5856d6]/20 text-[#af52de] font-medium text-sm"
+            className="mt-8 p-4 rounded-xl bg-primary/10 text-primary font-medium text-sm"
           >
             ✓ You're on the list! Check your inbox.
           </motion.div>
@@ -54,15 +54,15 @@ const EmailCapture = () => {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="your@email.com"
               required
-              className="h-12 rounded-full px-5 flex-1 bg-white/[0.06] border-white/10 text-white placeholder:text-white/30 focus:border-[#5856d6]"
+              className="h-12 rounded-full px-5 flex-1"
             />
-            <Button type="submit" className="h-12 rounded-full px-6 magnetic-gradient border-0 text-white font-semibold gap-2 shadow-[0_0_30px_rgba(255,45,85,0.2)]">
+            <Button type="submit" className="h-12 rounded-full px-6 magnetic-gradient border-0 text-white font-semibold gap-2 shadow-[0_0_30px_rgba(79,70,229,0.3)]">
               Subscribe <ArrowRight size={16} />
             </Button>
           </form>
         )}
 
-        <p className="mt-4 text-xs text-white/30">
+        <p className="mt-4 text-xs text-muted-foreground">
           Trusted by creators at Google, Meta, Spotify & more
         </p>
       </motion.div>
