@@ -1,76 +1,8 @@
 import { motion } from "framer-motion";
-import { FileText, Video, Palette, Code, Star, Download, TrendingUp } from "lucide-react";
+import { Star, Download, TrendingUp } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-
-const products = [
-  {
-    title: "Ultimate UI Kit",
-    category: "Design Assets",
-    price: "$49",
-    sales: "2.4k sales",
-    rating: 4.9,
-    icon: Palette,
-    gradient: "from-violet-500/20 to-fuchsia-500/20",
-    iconColor: "text-violet-600",
-    span: "col-span-2 row-span-2",
-    featured: true,
-  },
-  {
-    title: "SaaS Starter",
-    category: "Software",
-    price: "$79",
-    sales: "890 sales",
-    rating: 4.8,
-    icon: Code,
-    gradient: "from-blue-500/20 to-cyan-500/20",
-    iconColor: "text-blue-600",
-    span: "col-span-1 row-span-1",
-  },
-  {
-    title: "Video Editing Masterclass",
-    category: "Online Course",
-    price: "$129",
-    sales: "1.2k sales",
-    rating: 4.9,
-    icon: Video,
-    gradient: "from-orange-500/20 to-amber-500/20",
-    iconColor: "text-orange-600",
-    span: "col-span-1 row-span-1",
-  },
-  {
-    title: "Notion Finance Tracker",
-    category: "Templates",
-    price: "$19",
-    sales: "5.1k sales",
-    rating: 4.7,
-    icon: FileText,
-    gradient: "from-emerald-500/20 to-teal-500/20",
-    iconColor: "text-emerald-600",
-    span: "col-span-1 row-span-1",
-  },
-  {
-    title: "React Component Library",
-    category: "Software",
-    price: "$99",
-    sales: "640 sales",
-    rating: 4.8,
-    icon: Code,
-    gradient: "from-sky-500/20 to-indigo-500/20",
-    iconColor: "text-sky-600",
-    span: "col-span-2 row-span-1",
-  },
-  {
-    title: "Copywriting Playbook",
-    category: "E-book",
-    price: "$29",
-    sales: "3.3k sales",
-    rating: 4.6,
-    icon: FileText,
-    gradient: "from-rose-500/20 to-pink-500/20",
-    iconColor: "text-rose-600",
-    span: "col-span-1 row-span-1",
-  },
-];
+import { Link } from "react-router-dom";
+import { products } from "@/data/products";
 
 const container = {
   hidden: {},
@@ -106,10 +38,10 @@ const BentoProducts = () => {
           viewport={{ once: true, margin: "-100px" }}
         >
           {products.map((product) => (
+            <Link to={`/product/${product.id}`} key={product.id}>
             <motion.div
-              key={product.title}
               variants={item}
-              className={`${product.span} group relative rounded-2xl border border-border bg-card p-6 hover:border-primary/30 hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden`}
+              className={`${product.span} group relative rounded-2xl border border-border bg-card p-6 hover:border-primary/30 hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden h-full`}
             >
               <div className={`absolute inset-0 bg-gradient-to-br ${product.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
               
@@ -145,6 +77,7 @@ const BentoProducts = () => {
                 </div>
               </div>
             </motion.div>
+            </Link>
           ))}
         </motion.div>
       </div>
