@@ -168,7 +168,7 @@ const ProductForm = () => {
     setSaving(false);
   };
 
-  const applyTemplate = (template: typeof productTemplates[0]) => {
+  const applyTemplate = (template: ProductTemplate) => {
     setForm((f) => ({
       ...f,
       title: template.title,
@@ -178,6 +178,8 @@ const ProductForm = () => {
     }));
     setPricingType(template.price === "0" ? "free" : "paid");
   };
+
+  const [templateTab, setTemplateTab] = useState<TemplateCategory>("paid");
 
   if (authLoading) return null;
 
