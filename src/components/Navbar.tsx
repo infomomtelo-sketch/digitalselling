@@ -16,7 +16,7 @@ const Navbar = () => {
   }, []);
 
   const textClass = scrolled ? "text-foreground" : "text-white";
-  const mutedTextClass = scrolled ? "text-muted-foreground hover:text-foreground" : "text-white/70 hover:text-white";
+  const mutedTextClass = scrolled ? "text-muted-foreground hover:text-foreground" : "text-white/60 hover:text-white";
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/90 backdrop-blur-xl border-b border-border" : "bg-transparent"}`}>
