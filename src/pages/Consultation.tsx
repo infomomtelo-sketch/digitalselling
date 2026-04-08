@@ -258,7 +258,34 @@ const Consultation = () => {
     }
   };
 
-  const cleanContent = (content: string) => content.replace("BRIEF_CONFIRMED:", "").trim();
+  // Parse message content to separate text from quick-reply options
+  const parseMessage = (content: string) => {
+    const cleaned = content.replace("BRIEF_CONFIRMED:", "").trim();
+    const lines = cleaned.split("\n");
+    const textLines: string[] = [];
+    const options: string[] = [];
+
+    for (const line of lines) {
+      if (line.trim().startsWith(">> ")) {
+        options.push(line.trim().slice(3).trim());
+      } else {
+        textLines.push(line);
+      }
+    }
+
+    return {
+      text: textLines.join("\n").trim(),
+      options,
+    };
+  };
+
+  const handleQuickReply = (option: string) => {
+    if (isLoading || briefConfirmed) return;
+    setInput("");
+    setMessages((prev) => [...prev, { role: "user", content: option }]);
+    setShowCreditStore(false);
+    streamMessage(option);
+  };
 
   const freeRemaining = Math.max(0, credits.free_total - credits.free_used);
   const totalRemaining = freeRemaining + credits.paid_remaining;
@@ -363,26 +390,47 @@ const Consultation = () => {
             </div>
           )}
 
-          {messages.map((msg, i) => (
+          {messages.map((msg, i) => {
+            const parsed = msg.role === "assistant" ? parseMessage(msg.content) : null;
+            const isLastAssistant = msg.role === "assistant" && i === messages.length - 1;
+
+            return (
             <div key={i} className={`flex gap-3 ${msg.role === "user" ? "justify-end" : ""}`}>
               {msg.role === "assistant" && (
                 <div className="h-7 w-7 rounded-full bg-primary/20 flex items-center justify-center shrink-0 mt-1">
                   <Bot className="h-3.5 w-3.5 text-primary" />
                 </div>
               )}
-              <div
-                className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm ${
-                  msg.role === "user"
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-card border border-border"
-                }`}
-              >
-                {msg.role === "assistant" ? (
-                  <div className="prose prose-sm prose-invert max-w-none [&>p]:my-1 [&>ul]:my-1 [&>ol]:my-1">
-                    <ReactMarkdown>{cleanContent(msg.content)}</ReactMarkdown>
+              <div className={`max-w-[85%] ${msg.role === "user" ? "" : "space-y-3"}`}>
+                <div
+                  className={`rounded-2xl px-4 py-3 text-sm ${
+                    msg.role === "user"
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-card border border-border"
+                  }`}
+                >
+                  {msg.role === "assistant" && parsed ? (
+                    <div className="prose prose-sm prose-invert max-w-none [&>p]:my-1 [&>ul]:my-1 [&>ol]:my-1">
+                      <ReactMarkdown>{parsed.text}</ReactMarkdown>
+                    </div>
+                  ) : (
+                    <p className="whitespace-pre-wrap">{msg.content}</p>
+                  )}
+                </div>
+
+                {/* Clickable quick-reply options */}
+                {parsed && parsed.options.length > 0 && isLastAssistant && !isLoading && !briefConfirmed && totalRemaining > 0 && (
+                  <div className="flex flex-wrap gap-2 pl-1">
+                    {parsed.options.map((option, j) => (
+                      <button
+                        key={j}
+                        onClick={() => handleQuickReply(option)}
+                        className="text-sm px-3 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-foreground hover:bg-primary/15 hover:border-primary/50 transition-all active:scale-95"
+                      >
+                        {option}
+                      </button>
+                    ))}
                   </div>
-                ) : (
-                  <p className="whitespace-pre-wrap">{msg.content}</p>
                 )}
               </div>
               {msg.role === "user" && (
@@ -391,7 +439,8 @@ const Consultation = () => {
                 </div>
               )}
             </div>
-          ))}
+            );
+          })}
 
           {isLoading && messages[messages.length - 1]?.content === "" && (
             <div className="flex gap-3">
