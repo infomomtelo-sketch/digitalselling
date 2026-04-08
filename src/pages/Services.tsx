@@ -150,6 +150,48 @@ const Services = () => {
         </div>
       </section>
 
+      {/* How It Works */}
+      <section className="py-16 px-4">
+        <div className="max-w-4xl mx-auto">
+          <h3 className="text-2xl sm:text-3xl font-heading font-bold text-center mb-4">How We Build Your Site</h3>
+          <p className="text-center text-muted-foreground mb-12 max-w-xl mx-auto">
+            AI does the heavy lifting. Humans make it perfect.
+          </p>
+          <div className="grid sm:grid-cols-3 gap-6">
+            {[
+              {
+                icon: Zap,
+                step: "01",
+                title: "AI Builds the Foundation",
+                desc: "We use cutting-edge AI tools to generate your site's structure, layout, and core functionality in hours — not weeks.",
+              },
+              {
+                icon: Eye,
+                step: "02",
+                title: "Human Review & Polish",
+                desc: "Our team reviews every pixel — refining design, fixing edge cases, optimizing performance, and ensuring quality you'd expect from a top agency.",
+              },
+              {
+                icon: Code,
+                step: "03",
+                title: "You Get the Code",
+                desc: "We hand you clean, production-ready source code. No vendor lock-in, no monthly fees. It's yours forever to host and modify.",
+              },
+            ].map((item) => (
+              <div key={item.step} className="relative p-6 rounded-2xl bg-card border border-border">
+                <span className="text-4xl font-heading font-bold text-primary/15 absolute top-4 right-4">{item.step}</span>
+                <item.icon className="h-8 w-8 text-primary mb-4" />
+                <h4 className="font-heading font-bold text-lg mb-2">{item.title}</h4>
+                <p className="text-sm text-muted-foreground">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-center text-sm text-muted-foreground mt-8">
+            This is why we're <span className="text-foreground font-medium">faster than agencies</span> and <span className="text-foreground font-medium">better than pure AI builders</span>.
+          </p>
+        </div>
+      </section>
+
       {/* Pricing */}
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
