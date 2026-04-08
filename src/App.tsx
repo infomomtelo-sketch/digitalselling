@@ -22,6 +22,7 @@ import Unsubscribe from "./pages/Unsubscribe.tsx";
 import Consultation from "./pages/Consultation.tsx";
 import Chat from "./pages/Chat.tsx";
 import ChatWidget from "./components/ChatWidget.tsx";
+import SellerCabinet from "./pages/SellerCabinet.tsx";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +49,7 @@ const App = () => (
             <Route path="/unsubscribe" element={<Unsubscribe />} />
             <Route path="/consultation/:id" element={<Consultation />} />
             <Route path="/chat" element={<Chat />} />
+            <Route path="/dashboard/cabinet" element={<SellerCabinet />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

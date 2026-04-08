@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plus, Package, DollarSign, TrendingUp, LogOut, User, ChevronRight, Eye, EyeOff, Trash2 } from "lucide-react";
+import { Plus, Package, DollarSign, TrendingUp, LogOut, User, ChevronRight, Eye, EyeOff, Trash2, Sparkles } from "lucide-react";
 import StripeConnectCard from "@/components/StripeConnectCard";
 import { useToast } from "@/hooks/use-toast";
 
@@ -119,11 +119,18 @@ const Dashboard = () => {
             <h1 className="font-heading text-3xl font-bold text-foreground">Dashboard</h1>
             <p className="text-base text-muted-foreground mt-1">Manage your products and track sales</p>
           </div>
-          <Link to="/dashboard/products/new">
-            <Button size="lg" className="text-base w-full sm:w-auto">
-              <Plus size={18} className="mr-1.5" /> New Product
-            </Button>
-          </Link>
+          <div className="flex gap-2 w-full sm:w-auto">
+            <Link to="/dashboard/cabinet">
+              <Button variant="outline" size="lg" className="text-base">
+                <Sparkles size={18} className="mr-1.5" /> Seller Cabinet
+              </Button>
+            </Link>
+            <Link to="/dashboard/products/new">
+              <Button size="lg" className="text-base w-full sm:w-auto">
+                <Plus size={18} className="mr-1.5" /> New Product
+              </Button>
+            </Link>
+          </div>
         </div>
 
         {/* Stripe Connect */}
