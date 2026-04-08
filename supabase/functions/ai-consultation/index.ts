@@ -7,6 +7,8 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
+const FREE_MESSAGE_LIMIT = 10;
+
 const SYSTEM_PROMPT = `You are a professional web design consultant for DropVault's Website Builder Service. Your job is to help clients plan their website through a friendly, structured conversation.
 
 RULES:
@@ -69,6 +71,56 @@ serve(async (req) => {
       });
     }
 
+    // Get or create credits record
+    let { data: credits } = await supabase
+      .from("consultation_credits")
+      .select("*")
+      .eq("service_request_id", serviceRequestId)
+      .single();
+
+    if (!credits) {
+      const { data: newCredits, error: insertError } = await supabase
+        .from("consultation_credits")
+        .insert({ service_request_id: serviceRequestId })
+        .select()
+        .single();
+
+      if (insertError) throw insertError;
+      credits = newCredits;
+    }
+
+    // Check if user has messages remaining (only count user messages toward limit)
+    if (message) {
+      const totalUserMessages = credits.free_messages_used;
+      const hasFreeMsgs = totalUserMessages < FREE_MESSAGE_LIMIT;
+      const hasPaidCredits = credits.paid_credits > 0;
+
+      if (!hasFreeMsgs && !hasPaidCredits) {
+        return new Response(JSON.stringify({
+          error: "no_credits",
+          free_used: credits.free_messages_used,
+          paid_remaining: 0,
+          message: "You've used all your free messages. Purchase credits to continue."
+        }), {
+          status: 402,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      // Deduct credit
+      if (hasFreeMsgs) {
+        await supabase
+          .from("consultation_credits")
+          .update({ free_messages_used: credits.free_messages_used + 1, updated_at: new Date().toISOString() })
+          .eq("service_request_id", serviceRequestId);
+      } else {
+        await supabase
+          .from("consultation_credits")
+          .update({ paid_credits: credits.paid_credits - 1, updated_at: new Date().toISOString() })
+          .eq("service_request_id", serviceRequestId);
+      }
+    }
+
     // Get existing conversation
     const { data: existingMessages } = await supabase
       .from("consultation_messages")
@@ -78,7 +130,6 @@ serve(async (req) => {
 
     const history = existingMessages || [];
 
-    // If this is the first message, add context about the request
     const contextMessage = `Client Details:
 - Name: ${request.name}
 - Email: ${request.email}
@@ -87,16 +138,13 @@ serve(async (req) => {
 
 Start the consultation by greeting them and asking the first question.`;
 
-    // Build messages for AI
     const aiMessages: Array<{ role: string; content: string }> = [
       { role: "system", content: SYSTEM_PROMPT },
     ];
 
     if (history.length === 0) {
-      // First interaction - include context
       aiMessages.push({ role: "user", content: contextMessage });
     } else {
-      // Include context as first user message, then history
       aiMessages.push({ role: "user", content: contextMessage });
       aiMessages.push({ role: "assistant", content: history[0].content });
       for (let i = 1; i < history.length; i++) {
@@ -104,11 +152,8 @@ Start the consultation by greeting them and asking the first question.`;
       }
     }
 
-    // Add new user message if provided
     if (message) {
       aiMessages.push({ role: "user", content: message });
-
-      // Save user message
       await supabase.from("consultation_messages").insert({
         service_request_id: serviceRequestId,
         role: "user",
@@ -116,11 +161,8 @@ Start the consultation by greeting them and asking the first question.`;
       });
     }
 
-    // Call Lovable AI
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    if (!LOVABLE_API_KEY) {
-      throw new Error("LOVABLE_API_KEY is not configured");
-    }
+    if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
 
     const aiResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -148,14 +190,27 @@ Start the consultation by greeting them and asking the first question.`;
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
-      const errorText = await aiResponse.text();
-      console.error("AI gateway error:", aiResponse.status, errorText);
       throw new Error("AI gateway error");
     }
 
-    // Stream the response back
+    // Get updated credits for the response header
+    const { data: updatedCredits } = await supabase
+      .from("consultation_credits")
+      .select("free_messages_used, paid_credits")
+      .eq("service_request_id", serviceRequestId)
+      .single();
+
     const readable = new ReadableStream({
       async start(controller) {
+        // Send credits info as first event
+        const creditsInfo = {
+          type: "credits",
+          free_used: updatedCredits?.free_messages_used || 0,
+          free_total: FREE_MESSAGE_LIMIT,
+          paid_remaining: updatedCredits?.paid_credits || 0,
+        };
+        controller.enqueue(new TextEncoder().encode(`data: ${JSON.stringify(creditsInfo)}\n\n`));
+
         const reader = aiResponse.body!.getReader();
         const decoder = new TextDecoder();
         let fullContent = "";
@@ -182,13 +237,10 @@ Start the consultation by greeting them and asking the first question.`;
                   fullContent += content;
                   controller.enqueue(new TextEncoder().encode(`data: ${JSON.stringify({ content })}\n\n`));
                 }
-              } catch {
-                // partial JSON, skip
-              }
+              } catch { /* partial */ }
             }
           }
 
-          // Save assistant message
           if (fullContent) {
             await supabase.from("consultation_messages").insert({
               service_request_id: serviceRequestId,
@@ -196,7 +248,6 @@ Start the consultation by greeting them and asking the first question.`;
               content: fullContent,
             });
 
-            // Check if brief was confirmed
             if (fullContent.includes("BRIEF_CONFIRMED:")) {
               const brief = fullContent.split("BRIEF_CONFIRMED:")[1].trim();
               await supabase

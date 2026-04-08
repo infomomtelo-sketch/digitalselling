@@ -14,6 +14,44 @@ export type Database = {
   }
   public: {
     Tables: {
+      consultation_credits: {
+        Row: {
+          created_at: string
+          free_messages_used: number
+          id: string
+          paid_credits: number
+          service_request_id: string
+          stripe_session_ids: string[] | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          free_messages_used?: number
+          id?: string
+          paid_credits?: number
+          service_request_id: string
+          stripe_session_ids?: string[] | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          free_messages_used?: number
+          id?: string
+          paid_credits?: number
+          service_request_id?: string
+          stripe_session_ids?: string[] | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "consultation_credits_service_request_id_fkey"
+            columns: ["service_request_id"]
+            isOneToOne: true
+            referencedRelation: "service_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       consultation_messages: {
         Row: {
           content: string
