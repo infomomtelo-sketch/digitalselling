@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Globe, Rocket, Shield, Headphones, Check, Send } from "lucide-react";
+import { ArrowLeft, Globe, Rocket, Shield, Headphones, Check, Send, Zap, Eye, Code } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
