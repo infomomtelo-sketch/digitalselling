@@ -153,6 +153,7 @@ const ProductForm = () => {
     if (error) {
       toast({ title: "Error", description: error.message, variant: "destructive" });
     } else {
+      setHasEdited(false);
       toast({ title: isEdit ? "Updated" : "Created", description: `Product ${isEdit ? "updated" : "created"} successfully.` });
       navigate("/dashboard");
     }
