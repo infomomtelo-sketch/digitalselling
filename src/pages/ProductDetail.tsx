@@ -1,19 +1,30 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Star, Download, ShieldCheck, Clock, Check, BadgeCheck } from "lucide-react";
 import ShareButtons from "@/components/ShareButtons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { getProductById, products } from "@/data/products";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
+  const [searchParams] = useSearchParams();
   const product = getProductById(id || "");
   const [selectedPreview, setSelectedPreview] = useState(0);
+  const [buying, setBuying] = useState(false);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    if (searchParams.get("success") === "true") {
+      toast({ title: "Purchase complete!", description: "Check your email for the download link." });
+    }
+  }, [searchParams]);
 
   if (!product) {
     return (
@@ -125,8 +136,30 @@ const ProductDetail = () => {
                   <span className="font-heading text-3xl font-bold text-foreground">{product.price}</span>
                   <span className="text-sm text-muted-foreground mb-1">one-time</span>
                 </div>
-                <Button size="lg" className="w-full text-base font-semibold mb-3">
-                  Buy Now
+                <Button
+                  size="lg"
+                  className="w-full text-base font-semibold mb-3"
+                  disabled={buying}
+                  onClick={async () => {
+                    setBuying(true);
+                    try {
+                      const priceNum = parseFloat(product.price.replace(/[^0-9.]/g, ""));
+                      const { data, error } = await supabase.functions.invoke("create-checkout", {
+                        body: {
+                          product_id: product.id,
+                          price_amount: priceNum,
+                          product_title: product.title,
+                        },
+                      });
+                      if (error) throw error;
+                      if (data?.url) window.open(data.url, "_blank");
+                    } catch (err: any) {
+                      toast({ title: "Checkout error", description: err.message, variant: "destructive" });
+                    }
+                    setBuying(false);
+                  }}
+                >
+                  {buying ? "Loading..." : "Buy Now"}
                 </Button>
                 <div className="flex items-center justify-center gap-4 text-xs text-muted-foreground">
                   <span className="flex items-center gap-1"><ShieldCheck size={12} /> Secure checkout</span>
