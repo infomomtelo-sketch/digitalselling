@@ -7,6 +7,9 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
+// Platform fee percentage (e.g., 10%)
+const PLATFORM_FEE_PERCENT = 10;
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -14,11 +17,11 @@ serve(async (req) => {
 
   const supabaseClient = createClient(
     Deno.env.get("SUPABASE_URL") ?? "",
-    Deno.env.get("SUPABASE_ANON_KEY") ?? ""
+    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
   );
 
   try {
-    const { product_id, price_amount, product_title } = await req.json();
+    const { product_id, price_amount, product_title, creator_id } = await req.json();
     if (!product_id || !price_amount || !product_title) {
       throw new Error("Missing product_id, price_amount, or product_title");
     }
@@ -45,7 +48,22 @@ serve(async (req) => {
       }
     }
 
-    const session = await stripe.checkout.sessions.create({
+    // Look up creator's connected Stripe account
+    let connectedAccountId: string | undefined;
+    if (creator_id) {
+      const { data: creatorProfile } = await supabaseClient
+        .from("profiles")
+        .select("stripe_account_id, stripe_onboarding_complete")
+        .eq("user_id", creator_id)
+        .single();
+
+      if (creatorProfile?.stripe_account_id && creatorProfile?.stripe_onboarding_complete) {
+        connectedAccountId = creatorProfile.stripe_account_id;
+      }
+    }
+
+    const unitAmount = Math.round(price_amount * 100);
+    const sessionParams: any = {
       customer: customerId,
       customer_email: customerId ? undefined : userEmail,
       line_items: [
@@ -56,7 +74,7 @@ serve(async (req) => {
               name: product_title,
               metadata: { product_id },
             },
-            unit_amount: Math.round(price_amount * 100),
+            unit_amount: unitAmount,
           },
           quantity: 1,
         },
@@ -64,14 +82,28 @@ serve(async (req) => {
       mode: "payment",
       success_url: `${req.headers.get("origin")}/product/${product_id}?success=true`,
       cancel_url: `${req.headers.get("origin")}/product/${product_id}`,
-      metadata: { product_id },
-    });
+      metadata: { product_id, creator_id: creator_id || "" },
+    };
+
+    // If creator has a connected account, use payment_intent_data for automatic transfer
+    if (connectedAccountId) {
+      const applicationFee = Math.round(unitAmount * (PLATFORM_FEE_PERCENT / 100));
+      sessionParams.payment_intent_data = {
+        application_fee_amount: applicationFee,
+        transfer_data: {
+          destination: connectedAccountId,
+        },
+      };
+    }
+
+    const session = await stripe.checkout.sessions.create(sessionParams);
 
     return new Response(JSON.stringify({ url: session.url }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
     });
   } catch (error) {
+    console.error("Checkout error:", error);
     return new Response(JSON.stringify({ error: error.message }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 500,
