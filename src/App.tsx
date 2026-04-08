@@ -47,10 +47,12 @@ const App = () => (
             <Route path="/services" element={<Services />} />
             <Route path="/unsubscribe" element={<Unsubscribe />} />
             <Route path="/consultation/:id" element={<Consultation />} />
+            <Route path="/chat" element={<Chat />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <ChatWidget />
         </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
