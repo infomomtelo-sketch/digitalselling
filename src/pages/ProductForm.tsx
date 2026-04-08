@@ -12,38 +12,46 @@ import { useToast } from "@/hooks/use-toast";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import { ArrowLeft, Upload, Image, Sparkles, DollarSign, Gift } from "lucide-react";
 
-const categories = ["Design Assets", "Software", "Online Course", "Templates", "E-book", "Other"];
+const categories = ["Design Assets", "Software", "Online Course", "Templates", "E-book", "Music & Audio", "Photography", "Video", "3D Assets", "Fonts", "Notion Templates", "Figma Files", "Other"];
 
-const productTemplates = [
-  {
-    title: "UI Kit Template",
-    description: "A collection of reusable UI components",
-    category: "Design Assets",
-    price: "29",
-    icon: "🎨",
-  },
-  {
-    title: "Online Course",
-    description: "A comprehensive video course",
-    category: "Online Course",
-    price: "49",
-    icon: "🎓",
-  },
-  {
-    title: "Free Resource Pack",
-    description: "A free starter pack for your community",
-    category: "Templates",
-    price: "0",
-    icon: "🎁",
-  },
-  {
-    title: "E-book Guide",
-    description: "A detailed PDF guide",
-    category: "E-book",
-    price: "19",
-    icon: "📘",
-  },
-];
+type TemplateCategory = "free" | "paid";
+
+interface ProductTemplate {
+  title: string;
+  description: string;
+  category: string;
+  price: string;
+  icon: string;
+  tag?: string;
+  competitor?: string;
+}
+
+const productTemplates: Record<TemplateCategory, ProductTemplate[]> = {
+  free: [
+    { title: "Free Resource Pack", description: "Starter pack to grow your audience", category: "Templates", price: "0", icon: "🎁", tag: "Lead Magnet" },
+    { title: "Free Icon Set", description: "50+ vector icons for any project", category: "Design Assets", price: "0", icon: "✨", tag: "Popular" },
+    { title: "Free Wallpaper Pack", description: "HD wallpapers for desktop & mobile", category: "Design Assets", price: "0", icon: "🖼️" },
+    { title: "Free Notion Planner", description: "Weekly planner template for Notion", category: "Notion Templates", price: "0", icon: "📋", tag: "Trending" },
+    { title: "Free Preset Pack", description: "5 Lightroom presets for beginners", category: "Photography", price: "0", icon: "📷" },
+    { title: "Free Sound Kit", description: "10 royalty-free loops & samples", category: "Music & Audio", price: "0", icon: "🎵" },
+    { title: "Free Cheat Sheet", description: "Quick-reference PDF guide", category: "E-book", price: "0", icon: "📄", tag: "Lead Magnet" },
+    { title: "Free Figma UI Kit", description: "Basic components to kickstart designs", category: "Figma Files", price: "0", icon: "🎯" },
+  ],
+  paid: [
+    { title: "UI Kit Pro", description: "500+ production-ready components", category: "Design Assets", price: "29", icon: "🎨", tag: "Best Seller", competitor: "Others charge $59+" },
+    { title: "Online Course", description: "Full video course with certificates", category: "Online Course", price: "49", icon: "🎓", tag: "Popular", competitor: "Others charge $99+" },
+    { title: "E-book Guide", description: "In-depth PDF guide with templates", category: "E-book", price: "9", icon: "📘", competitor: "Others charge $19+" },
+    { title: "Notion Dashboard", description: "All-in-one workspace template", category: "Notion Templates", price: "12", icon: "🧩", tag: "Trending", competitor: "Others charge $29+" },
+    { title: "Figma Design System", description: "Complete design system with tokens", category: "Figma Files", price: "19", icon: "💎", competitor: "Others charge $49+" },
+    { title: "Lightroom Presets", description: "25 professional photo presets", category: "Photography", price: "14", icon: "📸", tag: "Popular", competitor: "Others charge $35+" },
+    { title: "Music Sample Pack", description: "100+ loops, stems & one-shots", category: "Music & Audio", price: "15", icon: "🎧", competitor: "Others charge $39+" },
+    { title: "Font Family", description: "Custom typeface with 6 weights", category: "Fonts", price: "19", icon: "🔤", competitor: "Others charge $49+" },
+    { title: "Video LUT Pack", description: "Cinematic color grades for video", category: "Video", price: "12", icon: "🎬", competitor: "Others charge $29+" },
+    { title: "3D Model Pack", description: "Low-poly assets for games & web", category: "3D Assets", price: "24", icon: "🧊", competitor: "Others charge $59+" },
+    { title: "SaaS Starter Kit", description: "Boilerplate code with auth & payments", category: "Software", price: "39", icon: "🚀", tag: "Best Seller", competitor: "Others charge $79+" },
+    { title: "WordPress Theme", description: "Responsive theme with page builder", category: "Software", price: "19", icon: "🌐", competitor: "Others charge $49+" },
+  ],
+};
 
 const ProductForm = () => {
   const { id } = useParams<{ id: string }>();
