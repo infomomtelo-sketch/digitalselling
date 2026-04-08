@@ -1,5 +1,9 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Outlet,
+} from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -26,37 +30,47 @@ import SellerCabinet from "./pages/SellerCabinet.tsx";
 
 const queryClient = new QueryClient();
 
+function RootLayout() {
+  return (
+    <AuthProvider>
+      <Outlet />
+      <ChatWidget />
+    </AuthProvider>
+  );
+}
+
+const router = createBrowserRouter([
+  {
+    element: <RootLayout />,
+    children: [
+      { path: "/", element: <Index /> },
+      { path: "/product/:id", element: <ProductDetail /> },
+      { path: "/auth", element: <Auth /> },
+      { path: "/dashboard", element: <Dashboard /> },
+      { path: "/dashboard/products/:id", element: <ProductForm /> },
+      { path: "/dashboard/profile", element: <Profile /> },
+      { path: "/creator/:id", element: <CreatorProfile /> },
+      { path: "/creators", element: <Creators /> },
+      { path: "/privacy", element: <PrivacyPolicy /> },
+      { path: "/terms", element: <TermsOfService /> },
+      { path: "/cookies", element: <CookiePolicy /> },
+      { path: "/services", element: <Services /> },
+      { path: "/unsubscribe", element: <Unsubscribe /> },
+      { path: "/consultation/:id", element: <Consultation /> },
+      { path: "/chat", element: <Chat /> },
+      { path: "/dashboard/cabinet", element: <SellerCabinet /> },
+      { path: "/reset-password", element: <ResetPassword /> },
+      { path: "*", element: <NotFound /> },
+    ],
+  },
+]);
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
-        <AuthProvider>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/product/:id" element={<ProductDetail />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/dashboard/products/:id" element={<ProductForm />} />
-            <Route path="/dashboard/profile" element={<Profile />} />
-            <Route path="/creator/:id" element={<CreatorProfile />} />
-            <Route path="/creators" element={<Creators />} />
-            <Route path="/privacy" element={<PrivacyPolicy />} />
-            <Route path="/terms" element={<TermsOfService />} />
-            <Route path="/cookies" element={<CookiePolicy />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/unsubscribe" element={<Unsubscribe />} />
-            <Route path="/consultation/:id" element={<Consultation />} />
-            <Route path="/chat" element={<Chat />} />
-            <Route path="/dashboard/cabinet" element={<SellerCabinet />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-          <ChatWidget />
-        </AuthProvider>
-      </BrowserRouter>
+      <RouterProvider router={router} />
     </TooltipProvider>
   </QueryClientProvider>
 );
