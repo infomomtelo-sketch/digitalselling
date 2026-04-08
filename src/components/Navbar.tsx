@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { Menu, X, ShoppingCart } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
