@@ -19,6 +19,7 @@ import ResetPassword from "./pages/ResetPassword.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Services from "./pages/Services.tsx";
 import Unsubscribe from "./pages/Unsubscribe.tsx";
+import Consultation from "./pages/Consultation.tsx";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +44,7 @@ const App = () => (
             <Route path="/cookies" element={<CookiePolicy />} />
             <Route path="/services" element={<Services />} />
             <Route path="/unsubscribe" element={<Unsubscribe />} />
+            <Route path="/consultation/:id" element={<Consultation />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

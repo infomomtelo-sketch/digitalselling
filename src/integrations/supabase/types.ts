@@ -14,6 +14,38 @@ export type Database = {
   }
   public: {
     Tables: {
+      consultation_messages: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          role: string
+          service_request_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          role: string
+          service_request_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          role?: string
+          service_request_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "consultation_messages_service_request_id_fkey"
+            columns: ["service_request_id"]
+            isOneToOne: false
+            referencedRelation: "service_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       email_send_log: {
         Row: {
           created_at: string
@@ -278,6 +310,7 @@ export type Database = {
       }
       service_requests: {
         Row: {
+          brief: string | null
           created_at: string
           details: string
           email: string
@@ -288,6 +321,7 @@ export type Database = {
           user_id: string | null
         }
         Insert: {
+          brief?: string | null
           created_at?: string
           details: string
           email: string
@@ -298,6 +332,7 @@ export type Database = {
           user_id?: string | null
         }
         Update: {
+          brief?: string | null
           created_at?: string
           details?: string
           email?: string
