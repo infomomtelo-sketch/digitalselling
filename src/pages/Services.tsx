@@ -11,7 +11,7 @@ import { useAuth } from "@/hooks/useAuth";
 const plans = [
   {
     name: "Starter",
-    price: "$299",
+    price: "$99",
     period: "one-time",
     description: "Perfect for personal sites & portfolios",
     features: [
@@ -19,14 +19,14 @@ const plans = [
       "Mobile responsive design",
       "Basic SEO setup",
       "1 revision round",
-      "Free hosting for 1 year",
-      "Custom domain setup",
+      "You OWN the source code",
+      "Free hosting for 6 months",
     ],
     accent: false,
   },
   {
     name: "Business",
-    price: "$799",
+    price: "$349",
     period: "one-time",
     description: "For growing businesses & online stores",
     features: [
@@ -34,27 +34,27 @@ const plans = [
       "Contact forms & integrations",
       "Advanced SEO & analytics",
       "3 revision rounds",
-      "Free hosting for 2 years",
+      "Full source code ownership",
+      "Free hosting for 1 year",
       "Custom domain + SSL",
-      "Social media integration",
-      "Content management system",
+      "No platform lock-in — ever",
     ],
     accent: true,
   },
   {
-    name: "Enterprise",
-    price: "Custom",
-    period: "quote",
-    description: "Full-scale web apps & platforms",
+    name: "Pro",
+    price: "$899",
+    period: "one-time",
+    description: "Full-scale web apps & e-commerce",
     features: [
       "Unlimited pages & features",
       "Custom web application",
-      "E-commerce functionality",
+      "E-commerce & payments",
       "Unlimited revisions",
+      "Complete code handoff",
       "Managed hosting & maintenance",
       "Priority support & SLA",
-      "API integrations",
-      "Performance optimization",
+      "Migrate anywhere, anytime",
     ],
     accent: false,
   },
@@ -120,14 +120,14 @@ const Services = () => {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
             <Rocket className="h-4 w-4" />
-            Professional Web Development
+            You Own It. No Lock-In.
           </div>
           <h2 className="text-3xl sm:text-5xl font-heading font-bold mb-6 leading-tight">
-            Let us build your website<br />
-            <span className="text-primary">while you focus on your business</span>
+            We build your website.<br />
+            <span className="text-primary">You own every line of code.</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            From simple portfolios to complex web apps — our team designs, builds, and hosts your site with ongoing support. No tech skills needed.
+            Unlike AI builders that keep your site hostage, we hand you the full source code. Host it anywhere, modify it anytime, no monthly platform fees trapping you.
           </p>
         </div>
       </section>
@@ -136,10 +136,10 @@ const Services = () => {
       <section className="pb-12 px-4">
         <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-6">
           {[
-            { icon: Globe, label: "Custom Domains", desc: "Your own .com" },
-            { icon: Shield, label: "SSL & Security", desc: "Enterprise-grade" },
-            { icon: Rocket, label: "Fast Hosting", desc: "99.9% uptime" },
-            { icon: Headphones, label: "24/7 Support", desc: "Always available" },
+            { icon: Globe, label: "You Own It", desc: "Full source code" },
+            { icon: Shield, label: "No Lock-In", desc: "Host anywhere" },
+            { icon: Rocket, label: "Fast Delivery", desc: "7-14 days" },
+            { icon: Headphones, label: "Free Support", desc: "30 days included" },
           ].map((item) => (
             <div key={item.label} className="text-center p-4 rounded-xl bg-card border border-border">
               <item.icon className="h-6 w-6 text-primary mx-auto mb-2" />
