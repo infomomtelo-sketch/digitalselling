@@ -15,7 +15,7 @@ const recentSales = [
 
 const TrustBar = () => {
   return (
-    <section className="py-6 px-4 sm:px-6 lg:px-8 border-b border-border bg-card/50">
+    <section className="py-6 px-4 sm:px-6 lg:px-8 border-b border-border bg-muted/50">
       <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-sm text-muted-foreground">
         <div className="flex items-center gap-2">
           <ShieldCheck size={18} className="text-primary" />
