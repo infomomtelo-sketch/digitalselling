@@ -199,8 +199,8 @@ const ProductDetail = () => {
             <h2 className="font-heading text-xl font-bold text-foreground mb-4">About this product</h2>
             <p className="text-muted-foreground leading-relaxed">{product.longDescription}</p>
 
-            {/* Reviews */}
             <ReviewSection productId={product.id} />
+          </motion.div>
 
           {/* Related products */}
           <Separator className="my-12" />
