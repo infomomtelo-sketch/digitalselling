@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Search, ShoppingBag } from "lucide-react";
+import { Menu, X, Search, ShoppingBag, Heart, MessageSquare } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
@@ -26,19 +26,26 @@ const Navbar = () => {
 
           {/* Center nav */}
           <div className="hidden md:flex items-center gap-1">
-            <a href="#products" className="px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-accent">Marketplace</a>
+            <Link to="/marketplace" className="px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-accent">Products</Link>
+            <Link to="/gigs" className="px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-accent">Services</Link>
             <Link to="/creators" className="px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-accent">Creators</Link>
-            <Link to="/services" className="px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-accent">Services</Link>
             <a href="#pricing" className="px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-accent">Pricing</a>
-            <a href="#features" className="px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-accent">Features</a>
           </div>
 
           {/* Right actions */}
           <div className="hidden md:flex items-center gap-2">
             {user ? (
-              <Link to="/dashboard">
-                <Button size="sm" className="h-8 text-xs font-semibold">Dashboard</Button>
-              </Link>
+              <div className="flex items-center gap-1">
+                <Link to="/wishlist">
+                  <Button variant="ghost" size="icon" className="h-8 w-8"><Heart size={16} /></Button>
+                </Link>
+                <Link to="/messages">
+                  <Button variant="ghost" size="icon" className="h-8 w-8"><MessageSquare size={16} /></Button>
+                </Link>
+                <Link to="/dashboard">
+                  <Button size="sm" className="h-8 text-xs font-semibold">Dashboard</Button>
+                </Link>
+              </div>
             ) : (
               <>
                 <Link to="/auth">
