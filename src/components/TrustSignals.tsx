@@ -12,24 +12,19 @@ const recentSales = [
 
 const TrustBar = () => {
   return (
-    <section className="py-4 px-4 sm:px-6 lg:px-8 border-b border-border">
-      <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-6 text-xs text-muted-foreground">
-        <div className="flex items-center gap-1.5">
-          <ShieldCheck size={14} className="text-primary" />
-          <span>Secure checkout</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <CreditCard size={14} className="text-primary" />
-          <span>Stripe-powered</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <BadgeCheck size={14} className="text-primary" />
-          <span>Verified creators</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <Zap size={14} className="text-primary" />
-          <span>Instant delivery</span>
-        </div>
+    <section className="py-6 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto flex flex-wrap items-center justify-center gap-8 text-sm text-muted-foreground">
+        {[
+          { icon: ShieldCheck, label: "Secure" },
+          { icon: CreditCard, label: "Stripe" },
+          { icon: BadgeCheck, label: "Verified" },
+          { icon: Zap, label: "Instant" },
+        ].map(({ icon: Icon, label }) => (
+          <div key={label} className="flex items-center gap-2">
+            <Icon size={16} className="text-primary" />
+            <span>{label}</span>
+          </div>
+        ))}
       </div>
     </section>
   );
@@ -61,7 +56,7 @@ const SalesToast = () => {
   const sale = recentSales[currentSale];
 
   return (
-    <div className="fixed bottom-4 left-4 z-50 max-w-[260px]">
+    <div className="fixed bottom-4 left-4 z-50 max-w-[280px]">
       <AnimatePresence>
         {visible && (
           <motion.div
@@ -69,16 +64,16 @@ const SalesToast = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.97 }}
             transition={{ duration: 0.25 }}
-            className="bg-card border border-border rounded-lg p-3 shadow-lg flex items-center gap-2.5"
+            className="bg-card border border-border rounded-2xl p-4 shadow-xl flex items-center gap-3"
           >
-            <div className="w-7 h-7 rounded-full magnetic-gradient flex items-center justify-center flex-shrink-0">
-              <span className="text-white text-[10px] font-bold">{sale.buyer.charAt(0)}</span>
+            <div className="w-9 h-9 rounded-full magnetic-gradient flex items-center justify-center flex-shrink-0">
+              <span className="text-white text-xs font-bold">{sale.buyer.charAt(0)}</span>
             </div>
             <div className="min-w-0">
-              <p className="text-[11px] font-medium text-foreground truncate">
+              <p className="text-xs font-medium text-foreground truncate">
                 {sale.buyer} bought <span className="text-primary">{sale.product}</span>
               </p>
-              <p className="text-[9px] text-muted-foreground">{sale.price} · {sale.time}</p>
+              <p className="text-[10px] text-muted-foreground">{sale.price} · {sale.time}</p>
             </div>
           </motion.div>
         )}

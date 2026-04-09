@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Check, ArrowRight, Star } from "lucide-react";
+import { Check, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
@@ -9,43 +9,23 @@ const plans = [
     name: "Starter",
     price: "$0",
     period: "forever",
-    description: "Try dropvault risk-free. List up to 3 products.",
-    features: ["3 products", "Basic storefront", "Stripe payouts", "5% platform fee", "Email support"],
+    features: ["3 products", "Storefront", "Stripe payouts", "5% fee"],
     cta: "Start free",
     popular: false,
   },
   {
     name: "Creator",
     price: "$1",
-    period: "/month",
-    description: "Your full digital store. Products + services.",
-    features: [
-      "Unlimited products",
-      "Branded storefront",
-      "Service listings",
-      "Analytics dashboard",
-      "AI descriptions",
-      "5% platform fee",
-      "Priority support",
-    ],
-    cta: "Open your store",
+    period: "/mo",
+    features: ["Unlimited products", "Service listings", "Analytics", "AI tools", "5% fee"],
+    cta: "Open store",
     popular: true,
   },
   {
     name: "Pro",
     price: "$29",
-    period: "/month",
-    description: "For power sellers scaling their business.",
-    features: [
-      "Everything in Creator",
-      "Custom domain",
-      "Premium templates",
-      "Affiliate system",
-      "API access",
-      "3% platform fee",
-      "Dedicated support",
-      "White-label checkout",
-    ],
+    period: "/mo",
+    features: ["Everything in Creator", "Custom domain", "API access", "3% fee", "White-label"],
     cta: "Go Pro",
     popular: false,
   },
@@ -53,76 +33,70 @@ const plans = [
 
 const Pricing = () => {
   return (
-    <section id="pricing" className="py-20 px-4 sm:px-6 lg:px-8 relative">
-      <div className="max-w-6xl mx-auto">
-        <div className="mb-12">
-          <h2 className="font-heading text-2xl sm:text-3xl font-bold text-foreground">
-            Simple pricing
+    <section id="pricing" className="py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-80 h-80 bg-primary/10 rounded-full blur-[140px]" />
+      
+      <div className="max-w-4xl mx-auto relative z-10">
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="font-heading text-3xl sm:text-5xl font-bold text-foreground">
+            Start free.
+            <br />
+            <span className="text-muted-foreground">Scale when ready.</span>
           </h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Start free. Launch your store for $1/mo. Scale with Pro.
-          </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {plans.map((plan, i) => (
             <motion.div
               key={plan.name}
-              className={`relative rounded-xl border p-6 flex flex-col ${
+              className={`relative rounded-2xl border p-7 flex flex-col ${
                 plan.popular
-                  ? "border-primary/50 bg-card ring-1 ring-primary/20"
+                  ? "border-primary/40 bg-card ring-1 ring-primary/20 scale-[1.02]"
                   : "border-border bg-card"
               }`}
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.3, delay: i * 0.08 }}
+              transition={{ duration: 0.3, delay: i * 0.1 }}
             >
               {plan.popular && (
-                <Badge className="absolute -top-2.5 left-4 magnetic-gradient text-white text-[10px] border-0 px-2">
-                  Most Popular
+                <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 magnetic-gradient text-white text-xs border-0 px-4 py-1">
+                  Popular
                 </Badge>
               )}
 
-              <h3 className="font-heading text-base font-semibold text-card-foreground">{plan.name}</h3>
-              <div className="mt-3 flex items-baseline gap-1">
-                <span className="font-heading text-3xl font-bold text-foreground">{plan.price}</span>
-                <span className="text-xs text-muted-foreground">{plan.period}</span>
+              <h3 className="font-heading text-lg font-semibold text-foreground">{plan.name}</h3>
+              <div className="mt-4 flex items-baseline gap-1">
+                <span className="font-heading text-4xl font-bold text-foreground">{plan.price}</span>
+                <span className="text-sm text-muted-foreground">{plan.period}</span>
               </div>
-              <p className="mt-2 text-xs text-muted-foreground">{plan.description}</p>
 
-              <ul className="mt-6 space-y-2.5 flex-1">
+              <ul className="mt-8 space-y-3 flex-1">
                 {plan.features.map((feature) => (
-                  <li key={feature} className="flex items-center gap-2 text-xs text-card-foreground">
-                    <Check size={14} className="text-primary shrink-0" />
+                  <li key={feature} className="flex items-center gap-2.5 text-sm text-foreground/80">
+                    <Check size={16} className="text-primary shrink-0" />
                     {feature}
                   </li>
                 ))}
               </ul>
 
-              <Link to="/auth" className="mt-6">
+              <Link to="/auth" className="mt-8">
                 <Button
                   variant={plan.popular ? "default" : "outline"}
-                  className={`w-full gap-2 text-xs ${
-                    plan.popular
-                      ? "magnetic-gradient border-0 text-white"
-                      : ""
+                  className={`w-full h-12 rounded-xl gap-2 text-sm ${
+                    plan.popular ? "magnetic-gradient border-0 text-white shadow-lg shadow-primary/20" : ""
                   }`}
-                  size="sm"
                 >
-                  {plan.cta} {plan.popular && <ArrowRight size={14} />}
+                  {plan.cta} {plan.popular && <ArrowRight size={16} />}
                 </Button>
               </Link>
             </motion.div>
           ))}
-        </div>
-
-        {/* Upsell hint */}
-        <div className="mt-8 p-4 rounded-xl border border-border bg-card/50 text-center">
-          <p className="text-xs text-muted-foreground">
-            <Star size={12} className="inline text-amber-500 mr-1" />
-            Need premium templates, hosting, or marketing tools? Browse our <Link to="/dashboard/cabinet" className="text-primary hover:underline font-medium">Seller Cabinet</Link> for add-ons.
-          </p>
         </div>
       </div>
     </section>
