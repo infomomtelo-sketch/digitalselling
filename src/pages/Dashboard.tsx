@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plus, Package, DollarSign, TrendingUp, LogOut, User, ChevronRight, Eye, EyeOff, Trash2, Sparkles } from "lucide-react";
+import { Plus, Package, DollarSign, TrendingUp, LogOut, User, ChevronRight, Eye, EyeOff, Trash2, Sparkles, Briefcase, BarChart3, MessageSquare, ShieldCheck } from "lucide-react";
 import StripeConnectCard from "@/components/StripeConnectCard";
 import { useToast } from "@/hooks/use-toast";
 
@@ -30,6 +30,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [products, setProducts] = useState<Product[]>([]);
+  const [services, setServices] = useState<any[]>([]);
   const [stats, setStats] = useState<OrderStat>({ total_revenue: 0, total_orders: 0 });
   const [loading, setLoading] = useState(true);
 
@@ -40,7 +41,7 @@ const Dashboard = () => {
   useEffect(() => {
     if (!user) return;
     const fetchData = async () => {
-      const [productsRes, ordersRes] = await Promise.all([
+      const [productsRes, ordersRes, servicesRes] = await Promise.all([
         supabase
           .from("products")
           .select("id, title, price, category, is_published, sales_count, cover_image_url, created_at")
@@ -50,9 +51,15 @@ const Dashboard = () => {
           .from("orders")
           .select("amount, product_id, products!inner(creator_id)")
           .eq("products.creator_id", user.id),
+        supabase
+          .from("services")
+          .select("id, title, basic_price, category, is_published, sales_count, cover_image_url, created_at")
+          .eq("creator_id", user.id)
+          .order("created_at", { ascending: false }),
       ]);
 
       if (productsRes.data) setProducts(productsRes.data);
+      if (servicesRes.data) setServices(servicesRes.data);
 
       if (ordersRes.data) {
         const revenue = ordersRes.data.reduce((sum, o) => sum + Number(o.amount), 0);
@@ -119,15 +126,30 @@ const Dashboard = () => {
             <h1 className="font-heading text-3xl font-bold text-foreground">Dashboard</h1>
             <p className="text-base text-muted-foreground mt-1">Manage your products and track sales</p>
           </div>
-          <div className="flex gap-2 w-full sm:w-auto">
+          <div className="flex gap-2 w-full sm:w-auto flex-wrap">
+            <Link to="/dashboard/analytics">
+              <Button variant="outline" size="lg" className="text-base">
+                <BarChart3 size={18} className="mr-1.5" /> Analytics
+              </Button>
+            </Link>
+            <Link to="/messages">
+              <Button variant="outline" size="lg" className="text-base">
+                <MessageSquare size={18} className="mr-1.5" /> Messages
+              </Button>
+            </Link>
             <Link to="/dashboard/cabinet">
               <Button variant="outline" size="lg" className="text-base">
-                <Sparkles size={18} className="mr-1.5" /> Seller Cabinet
+                <Sparkles size={18} className="mr-1.5" /> Cabinet
               </Button>
             </Link>
             <Link to="/dashboard/products/new">
-              <Button size="lg" className="text-base w-full sm:w-auto">
-                <Plus size={18} className="mr-1.5" /> New Product
+              <Button size="lg" className="text-base">
+                <Plus size={18} className="mr-1.5" /> Product
+              </Button>
+            </Link>
+            <Link to="/dashboard/services/new">
+              <Button size="lg" className="text-base" variant="secondary">
+                <Briefcase size={18} className="mr-1.5" /> Service
               </Button>
             </Link>
           </div>
