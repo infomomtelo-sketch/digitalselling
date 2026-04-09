@@ -265,6 +265,54 @@ const Dashboard = () => {
             ))}
           </div>
         )}
+
+        {/* Services list */}
+        <h2 className="font-heading text-xl font-semibold text-foreground mb-4 mt-10">Your Services</h2>
+        {services.length === 0 ? (
+          <Card className="p-8 text-center">
+            <Briefcase size={40} className="mx-auto text-muted-foreground/40 mb-3" />
+            <p className="text-base text-muted-foreground mb-4">No services yet. Start offering freelance gigs!</p>
+            <Link to="/dashboard/services/new">
+              <Button size="lg" className="text-base">
+                <Plus size={18} className="mr-1.5" /> Create Service
+              </Button>
+            </Link>
+          </Card>
+        ) : (
+          <div className="space-y-3">
+            {services.map((s: any) => (
+              <Card key={s.id} className="p-4">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                  <div className="flex items-center gap-4 flex-1 min-w-0">
+                    <div className="w-16 h-16 rounded-xl bg-muted flex-shrink-0 overflow-hidden flex items-center justify-center">
+                      {s.cover_image_url ? (
+                        <img src={s.cover_image_url} alt="" className="w-full h-full object-cover" />
+                      ) : (
+                        <Briefcase size={24} className="text-muted-foreground/40" />
+                      )}
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="font-heading text-base font-semibold truncate">{s.title}</h3>
+                        <Badge variant={s.is_published ? "default" : "secondary"} className="text-xs shrink-0">
+                          {s.is_published ? "Live" : "Draft"}
+                        </Badge>
+                      </div>
+                      <p className="text-sm text-muted-foreground">{s.category} · From ${s.basic_price} · {s.sales_count} orders</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <Link to={`/dashboard/services/${s.id}`}>
+                      <Button variant="outline" size="default" className="text-sm">
+                        Edit <ChevronRight size={16} className="ml-1" />
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        )}
       </main>
     </div>
   );
