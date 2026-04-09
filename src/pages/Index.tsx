@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import { TrustBar, SalesToast } from "@/components/TrustSignals";
 import BentoProducts from "@/components/BentoProducts";
+import TemplateCarousel from "@/components/TemplateCarousel";
 import Testimonials from "@/components/Testimonials";
 import Features from "@/components/Features";
 import EmailCapture from "@/components/EmailCapture";
@@ -16,6 +17,7 @@ const Index = () => {
       <Hero />
       <TrustBar />
       <BentoProducts />
+      <TemplateCarousel />
       <Testimonials />
       <Features />
       <EmailCapture />

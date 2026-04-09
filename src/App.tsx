@@ -35,6 +35,7 @@ import Messages from "./pages/Messages.tsx";
 import Wishlist from "./pages/Wishlist.tsx";
 import Analytics from "./pages/Analytics.tsx";
 import AdminPanel from "./pages/AdminPanel.tsx";
+import TemplateDetail from "./pages/TemplateDetail.tsx";
 
 const queryClient = new QueryClient();
 
@@ -68,6 +69,7 @@ const router = createBrowserRouter([
       { path: "/messages", element: <Messages /> },
       { path: "/wishlist", element: <Wishlist /> },
       { path: "/admin", element: <AdminPanel /> },
+      { path: "/templates/:id", element: <TemplateDetail /> },
       { path: "/privacy", element: <PrivacyPolicy /> },
       { path: "/terms", element: <TermsOfService /> },
       { path: "/cookies", element: <CookiePolicy /> },
