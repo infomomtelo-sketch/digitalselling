@@ -1,29 +1,32 @@
 
-## AI Consultation Chat Flow
+## Phase 1: Core Commerce (Build First)
+1. **Reviews & Ratings System** — Star ratings + written reviews on products, displayed on product cards and detail pages
+2. **Buyer-Seller Messaging** — Real-time chat between buyers and sellers for service orders
+3. **File Delivery System** — Secure download links after purchase (using existing storage bucket)
 
-### How it works:
-1. **User submits service request** → saved to database, confirmation email sent
-2. **User is redirected to a consultation chat page** (`/consultation/:requestId`)
-3. **AI reads the request details** and starts a conversation offering options:
-   - Design style preferences (modern, minimal, bold, etc.)
-   - Color palette suggestions
-   - Layout recommendations
-   - Feature priorities
-   - Content structure
-4. **User answers questions & confirms choices** through the chat
-5. **AI generates a final project brief** summarizing all confirmed decisions
-6. **Brief is saved** and you (the owner) get notified with the complete plan
+## Phase 2: Service Marketplace (Fiverr Side)
+4. **Service/Gig Listings** — New `services` table with Basic/Standard/Premium pricing tiers
+5. **Service Categories & Discovery** — Browse services by category with filters
+6. **Service Order Flow** — Buyer selects a tier, pays, seller delivers
 
-### What gets built:
-- **New edge function** (`ai-consultation`) — powers the AI chat using Lovable AI
-- **New database table** (`consultation_messages`) — stores the chat history per request
-- **New page** (`/consultation/:id`) — the chat UI
-- **Updated service request flow** — redirects to consultation after submission
-- **Updated `service_requests` table** — adds a `brief` column to store the final plan
+## Phase 3: Discovery & Trust
+7. **Search & Filtering** — Full marketplace search with category, price, rating filters + sorting
+8. **Wishlist/Favorites Page** — Save products and services for later
+9. **SEO Optimization** — JSON-LD, OG tags, canonical URLs on product/service pages
 
-### The AI will:
-- Greet the user by name and reference their request details
-- Ask targeted questions one at a time
-- Offer 2-3 options per question with recommendations
-- Summarize choices and ask for final confirmation
-- Generate a structured brief once confirmed
+## Phase 4: Creator Tools
+10. **Creator Analytics Dashboard** — Sales, revenue, views, conversion tracking with charts
+11. **Refund System** — Buyers can request refunds, sellers approve/deny
+
+## Phase 5: Platform Management
+12. **Admin Panel** — Manage users, products, disputes, view platform analytics
+13. **Affiliate/Referral Program** — Referral links for buyers to earn credits
+
+### Database tables needed:
+- `reviews` — ratings, comments, product/service references
+- `messages` / `conversations` — buyer-seller chat
+- `services` — gig listings with tiers
+- `service_orders` — service purchase tracking
+- `wishlists` — saved items
+- `admin_actions` — audit log
+- `user_roles` — admin role management

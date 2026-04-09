@@ -84,6 +84,65 @@ export type Database = {
           },
         ]
       }
+      conversation_messages: {
+        Row: {
+          content: string
+          conversation_id: string
+          created_at: string
+          id: string
+          is_read: boolean
+          sender_id: string
+        }
+        Insert: {
+          content: string
+          conversation_id: string
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          sender_id: string
+        }
+        Update: {
+          content?: string
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          sender_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conversation_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      conversations: {
+        Row: {
+          created_at: string
+          id: string
+          last_message_at: string | null
+          participant_one: string
+          participant_two: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          last_message_at?: string | null
+          participant_one: string
+          participant_two: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          last_message_at?: string | null
+          participant_one?: string
+          participant_two?: string
+        }
+        Relationships: []
+      }
       email_send_log: {
         Row: {
           created_at: string
@@ -346,6 +405,44 @@ export type Database = {
         }
         Relationships: []
       }
+      reviews: {
+        Row: {
+          comment: string | null
+          created_at: string
+          id: string
+          product_id: string
+          rating: number
+          reviewer_id: string
+          updated_at: string
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string
+          id?: string
+          product_id: string
+          rating: number
+          reviewer_id: string
+          updated_at?: string
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string
+          id?: string
+          product_id?: string
+          rating?: number
+          reviewer_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       seller_resources: {
         Row: {
           affiliate_url: string
@@ -394,6 +491,59 @@ export type Database = {
         }
         Relationships: []
       }
+      service_orders: {
+        Row: {
+          amount: number
+          buyer_email: string
+          buyer_id: string
+          created_at: string
+          delivery_url: string | null
+          id: string
+          requirements: string | null
+          seller_id: string
+          service_id: string | null
+          status: string
+          tier: string
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          buyer_email: string
+          buyer_id: string
+          created_at?: string
+          delivery_url?: string | null
+          id?: string
+          requirements?: string | null
+          seller_id: string
+          service_id?: string | null
+          status?: string
+          tier?: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          buyer_email?: string
+          buyer_id?: string
+          created_at?: string
+          delivery_url?: string | null
+          id?: string
+          requirements?: string | null
+          seller_id?: string
+          service_id?: string | null
+          status?: string
+          tier?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "service_orders_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       service_requests: {
         Row: {
           brief: string | null
@@ -430,6 +580,75 @@ export type Database = {
         }
         Relationships: []
       }
+      services: {
+        Row: {
+          basic_delivery_days: number | null
+          basic_description: string | null
+          basic_price: number
+          category: string
+          cover_image_url: string | null
+          created_at: string
+          creator_id: string
+          description: string | null
+          id: string
+          is_published: boolean
+          long_description: string | null
+          premium_delivery_days: number | null
+          premium_description: string | null
+          premium_price: number | null
+          sales_count: number
+          standard_delivery_days: number | null
+          standard_description: string | null
+          standard_price: number | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          basic_delivery_days?: number | null
+          basic_description?: string | null
+          basic_price?: number
+          category?: string
+          cover_image_url?: string | null
+          created_at?: string
+          creator_id: string
+          description?: string | null
+          id?: string
+          is_published?: boolean
+          long_description?: string | null
+          premium_delivery_days?: number | null
+          premium_description?: string | null
+          premium_price?: number | null
+          sales_count?: number
+          standard_delivery_days?: number | null
+          standard_description?: string | null
+          standard_price?: number | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          basic_delivery_days?: number | null
+          basic_description?: string | null
+          basic_price?: number
+          category?: string
+          cover_image_url?: string | null
+          created_at?: string
+          creator_id?: string
+          description?: string | null
+          id?: string
+          is_published?: boolean
+          long_description?: string | null
+          premium_delivery_days?: number | null
+          premium_description?: string | null
+          premium_price?: number | null
+          sales_count?: number
+          standard_delivery_days?: number | null
+          standard_description?: string | null
+          standard_price?: number | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       suppressed_emails: {
         Row: {
           created_at: string
@@ -454,6 +673,63 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      wishlists: {
+        Row: {
+          created_at: string
+          id: string
+          product_id: string | null
+          service_id: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          product_id?: string | null
+          service_id?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          product_id?: string | null
+          service_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wishlists_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "wishlists_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -466,6 +742,13 @@ export type Database = {
       enqueue_email: {
         Args: { payload: Json; queue_name: string }
         Returns: number
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
       }
       move_to_dlq: {
         Args: {
@@ -486,7 +769,7 @@ export type Database = {
       }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "moderator" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -613,6 +896,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "moderator", "user"],
+    },
   },
 } as const

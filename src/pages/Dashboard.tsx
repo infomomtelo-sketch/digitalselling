@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plus, Package, DollarSign, TrendingUp, LogOut, User, ChevronRight, Eye, EyeOff, Trash2, Sparkles } from "lucide-react";
+import { Plus, Package, DollarSign, TrendingUp, LogOut, User, ChevronRight, Eye, EyeOff, Trash2, Sparkles, Briefcase, BarChart3, MessageSquare, ShieldCheck } from "lucide-react";
 import StripeConnectCard from "@/components/StripeConnectCard";
 import { useToast } from "@/hooks/use-toast";
 
@@ -30,6 +30,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [products, setProducts] = useState<Product[]>([]);
+  const [services, setServices] = useState<any[]>([]);
   const [stats, setStats] = useState<OrderStat>({ total_revenue: 0, total_orders: 0 });
   const [loading, setLoading] = useState(true);
 
@@ -40,7 +41,7 @@ const Dashboard = () => {
   useEffect(() => {
     if (!user) return;
     const fetchData = async () => {
-      const [productsRes, ordersRes] = await Promise.all([
+      const [productsRes, ordersRes, servicesRes] = await Promise.all([
         supabase
           .from("products")
           .select("id, title, price, category, is_published, sales_count, cover_image_url, created_at")
@@ -50,9 +51,15 @@ const Dashboard = () => {
           .from("orders")
           .select("amount, product_id, products!inner(creator_id)")
           .eq("products.creator_id", user.id),
+        supabase
+          .from("services")
+          .select("id, title, basic_price, category, is_published, sales_count, cover_image_url, created_at")
+          .eq("creator_id", user.id)
+          .order("created_at", { ascending: false }),
       ]);
 
       if (productsRes.data) setProducts(productsRes.data);
+      if (servicesRes.data) setServices(servicesRes.data);
 
       if (ordersRes.data) {
         const revenue = ordersRes.data.reduce((sum, o) => sum + Number(o.amount), 0);
@@ -119,15 +126,30 @@ const Dashboard = () => {
             <h1 className="font-heading text-3xl font-bold text-foreground">Dashboard</h1>
             <p className="text-base text-muted-foreground mt-1">Manage your products and track sales</p>
           </div>
-          <div className="flex gap-2 w-full sm:w-auto">
+          <div className="flex gap-2 w-full sm:w-auto flex-wrap">
+            <Link to="/dashboard/analytics">
+              <Button variant="outline" size="lg" className="text-base">
+                <BarChart3 size={18} className="mr-1.5" /> Analytics
+              </Button>
+            </Link>
+            <Link to="/messages">
+              <Button variant="outline" size="lg" className="text-base">
+                <MessageSquare size={18} className="mr-1.5" /> Messages
+              </Button>
+            </Link>
             <Link to="/dashboard/cabinet">
               <Button variant="outline" size="lg" className="text-base">
-                <Sparkles size={18} className="mr-1.5" /> Seller Cabinet
+                <Sparkles size={18} className="mr-1.5" /> Cabinet
               </Button>
             </Link>
             <Link to="/dashboard/products/new">
-              <Button size="lg" className="text-base w-full sm:w-auto">
-                <Plus size={18} className="mr-1.5" /> New Product
+              <Button size="lg" className="text-base">
+                <Plus size={18} className="mr-1.5" /> Product
+              </Button>
+            </Link>
+            <Link to="/dashboard/services/new">
+              <Button size="lg" className="text-base" variant="secondary">
+                <Briefcase size={18} className="mr-1.5" /> Service
               </Button>
             </Link>
           </div>
@@ -237,6 +259,54 @@ const Dashboard = () => {
                     >
                       <Trash2 size={18} />
                     </Button>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        )}
+
+        {/* Services list */}
+        <h2 className="font-heading text-xl font-semibold text-foreground mb-4 mt-10">Your Services</h2>
+        {services.length === 0 ? (
+          <Card className="p-8 text-center">
+            <Briefcase size={40} className="mx-auto text-muted-foreground/40 mb-3" />
+            <p className="text-base text-muted-foreground mb-4">No services yet. Start offering freelance gigs!</p>
+            <Link to="/dashboard/services/new">
+              <Button size="lg" className="text-base">
+                <Plus size={18} className="mr-1.5" /> Create Service
+              </Button>
+            </Link>
+          </Card>
+        ) : (
+          <div className="space-y-3">
+            {services.map((s: any) => (
+              <Card key={s.id} className="p-4">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                  <div className="flex items-center gap-4 flex-1 min-w-0">
+                    <div className="w-16 h-16 rounded-xl bg-muted flex-shrink-0 overflow-hidden flex items-center justify-center">
+                      {s.cover_image_url ? (
+                        <img src={s.cover_image_url} alt="" className="w-full h-full object-cover" />
+                      ) : (
+                        <Briefcase size={24} className="text-muted-foreground/40" />
+                      )}
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="font-heading text-base font-semibold truncate">{s.title}</h3>
+                        <Badge variant={s.is_published ? "default" : "secondary"} className="text-xs shrink-0">
+                          {s.is_published ? "Live" : "Draft"}
+                        </Badge>
+                      </div>
+                      <p className="text-sm text-muted-foreground">{s.category} · From ${s.basic_price} · {s.sales_count} orders</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <Link to={`/dashboard/services/${s.id}`}>
+                      <Button variant="outline" size="default" className="text-sm">
+                        Edit <ChevronRight size={16} className="ml-1" />
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               </Card>

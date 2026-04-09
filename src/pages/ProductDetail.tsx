@@ -2,6 +2,7 @@ import { useParams, Link, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Star, Download, ShieldCheck, Clock, Check, BadgeCheck } from "lucide-react";
 import ShareButtons from "@/components/ShareButtons";
+import ReviewSection from "@/components/ReviewSection";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -197,6 +198,8 @@ const ProductDetail = () => {
           >
             <h2 className="font-heading text-xl font-bold text-foreground mb-4">About this product</h2>
             <p className="text-muted-foreground leading-relaxed">{product.longDescription}</p>
+
+            <ReviewSection productId={product.id} />
           </motion.div>
 
           {/* Related products */}
