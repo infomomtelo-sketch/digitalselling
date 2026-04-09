@@ -2,6 +2,7 @@ import { useParams, Link, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Star, Download, ShieldCheck, Clock, Check, BadgeCheck } from "lucide-react";
 import ShareButtons from "@/components/ShareButtons";
+import ReviewSection from "@/components/ReviewSection";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";

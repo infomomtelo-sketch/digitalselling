@@ -27,6 +27,14 @@ import Consultation from "./pages/Consultation.tsx";
 import Chat from "./pages/Chat.tsx";
 import ChatWidget from "./components/ChatWidget.tsx";
 import SellerCabinet from "./pages/SellerCabinet.tsx";
+import Marketplace from "./pages/Marketplace.tsx";
+import ServiceGigs from "./pages/ServiceGigs.tsx";
+import ServiceDetail from "./pages/ServiceDetail.tsx";
+import ServiceForm from "./pages/ServiceForm.tsx";
+import Messages from "./pages/Messages.tsx";
+import Wishlist from "./pages/Wishlist.tsx";
+import Analytics from "./pages/Analytics.tsx";
+import AdminPanel from "./pages/AdminPanel.tsx";
 
 const queryClient = new QueryClient();
 
@@ -48,9 +56,18 @@ const router = createBrowserRouter([
       { path: "/auth", element: <Auth /> },
       { path: "/dashboard", element: <Dashboard /> },
       { path: "/dashboard/products/:id", element: <ProductForm /> },
+      { path: "/dashboard/services/:id", element: <ServiceForm /> },
       { path: "/dashboard/profile", element: <Profile /> },
+      { path: "/dashboard/analytics", element: <Analytics /> },
+      { path: "/dashboard/cabinet", element: <SellerCabinet /> },
       { path: "/creator/:id", element: <CreatorProfile /> },
       { path: "/creators", element: <Creators /> },
+      { path: "/marketplace", element: <Marketplace /> },
+      { path: "/gigs", element: <ServiceGigs /> },
+      { path: "/service/:id", element: <ServiceDetail /> },
+      { path: "/messages", element: <Messages /> },
+      { path: "/wishlist", element: <Wishlist /> },
+      { path: "/admin", element: <AdminPanel /> },
       { path: "/privacy", element: <PrivacyPolicy /> },
       { path: "/terms", element: <TermsOfService /> },
       { path: "/cookies", element: <CookiePolicy /> },
@@ -58,7 +75,6 @@ const router = createBrowserRouter([
       { path: "/unsubscribe", element: <Unsubscribe /> },
       { path: "/consultation/:id", element: <Consultation /> },
       { path: "/chat", element: <Chat /> },
-      { path: "/dashboard/cabinet", element: <SellerCabinet /> },
       { path: "/reset-password", element: <ResetPassword /> },
       { path: "*", element: <NotFound /> },
     ],
