@@ -1,78 +1,66 @@
 import { motion } from "framer-motion";
-import { Star, ArrowUpRight } from "lucide-react";
 
 const testimonials = [
   {
     name: "Sarah Chen",
     role: "UI Designer",
-    avatar: "SC",
     revenue: "$42K+",
-    quote: "Uploaded my first UI kit on a whim. Six months later it's my main income stream.",
+    quote: "Six months in — this is my main income now.",
+    gradient: "from-primary to-violet-500",
   },
   {
     name: "Marcus Lee",
     role: "Video Creator",
-    avatar: "ML",
     revenue: "$128K+",
-    quote: "My editing course hit 1,000 sales in the first month. The checkout converts like crazy.",
+    quote: "1,000 sales in the first month. Insane.",
+    gradient: "from-violet-500 to-pink-500",
   },
   {
     name: "Priya Sharma",
-    role: "Notion Creator",
-    avatar: "PS",
+    role: "Template Maker",
     revenue: "$89K+",
-    quote: "Went from freelancing 60 hours/week to earning more from templates I built once.",
-  },
-  {
-    name: "Jordan Patel",
-    role: "Software Engineer",
-    avatar: "JP",
-    revenue: "$63K+",
-    quote: "Selling my component library was the best decision. The marketplace brings buyers to me.",
+    quote: "Quit freelancing. Templates earn more.",
+    gradient: "from-emerald-500 to-cyan-500",
   },
 ];
 
 const Testimonials = () => {
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/20 relative">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-12">
-          <h2 className="font-heading text-2xl sm:text-3xl font-bold text-foreground">
-            Creators earning real revenue
-          </h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Real people, real results. Join thousands of creators building passive income.
-          </p>
-        </div>
+    <section className="py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Background orb */}
+      <div className="absolute bottom-0 right-[10%] w-80 h-80 bg-violet-500/10 rounded-full blur-[140px] orb-float-delayed" />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+      <div className="max-w-5xl mx-auto relative z-10">
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="font-heading text-3xl sm:text-5xl font-bold text-foreground">
+            Real creators.
+            <br />
+            <span className="magnetic-gradient-text">Real money.</span>
+          </h2>
+        </motion.div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {testimonials.map((t, i) => (
             <motion.div
               key={t.name}
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.3, delay: i * 0.06 }}
-              className="rounded-xl border border-border bg-card p-5 flex flex-col"
+              transition={{ duration: 0.4, delay: i * 0.1 }}
+              className="rounded-2xl border border-border bg-card p-8 flex flex-col items-center text-center hover:border-primary/30 transition-colors"
             >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-9 h-9 rounded-full magnetic-gradient flex items-center justify-center text-xs font-bold text-white shrink-0">
-                  {t.avatar}
-                </div>
-                <div className="min-w-0">
-                  <p className="font-heading text-xs font-semibold text-foreground">{t.name}</p>
-                  <p className="text-[10px] text-muted-foreground">{t.role}</p>
-                </div>
-                <div className="ml-auto text-right shrink-0">
-                  <p className="font-heading text-sm font-bold text-primary">{t.revenue}</p>
-                  <div className="flex gap-0.5 justify-end">
-                    {Array.from({ length: 5 }).map((_, j) => (
-                      <Star key={j} size={8} className="text-amber-500 fill-amber-500" />
-                    ))}
-                  </div>
-                </div>
+              <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${t.gradient} flex items-center justify-center mb-4 shadow-lg`}>
+                <span className="text-white font-bold text-lg">{t.name.charAt(0)}</span>
               </div>
-              <p className="text-xs text-muted-foreground leading-relaxed flex-1">"{t.quote}"</p>
+              <p className="font-heading text-3xl font-bold magnetic-gradient-text mb-2">{t.revenue}</p>
+              <p className="text-sm text-foreground font-medium mb-1">{t.name}</p>
+              <p className="text-xs text-muted-foreground mb-4">{t.role}</p>
+              <p className="text-sm text-muted-foreground leading-relaxed italic">"{t.quote}"</p>
             </motion.div>
           ))}
         </div>

@@ -14,42 +14,43 @@ const EmailCapture = () => {
     e.preventDefault();
     if (!email) return;
     setSubmitted(true);
-    toast({ title: "You're in! 🎉", description: "We'll send you the best creator tips & product drops." });
+    toast({ title: "You're in! 🎉", description: "Weekly creator tips coming your way." });
     setEmail("");
   };
 
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-muted/20">
+    <section className="py-24 px-4 sm:px-6 lg:px-8">
       <motion.div
-        className="max-w-xl mx-auto text-center"
+        className="max-w-lg mx-auto text-center"
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.4 }}
       >
-        <h2 className="font-heading text-xl sm:text-2xl font-bold text-foreground">
-          Creator tips & trending products
+        <p className="text-4xl mb-4">💌</p>
+        <h2 className="font-heading text-2xl sm:text-3xl font-bold text-foreground">
+          Stay in the loop
         </h2>
-        <p className="mt-2 text-xs text-muted-foreground">
-          Join 8,000+ creators. Weekly tips, no spam.
+        <p className="mt-3 text-sm text-muted-foreground">
+          Weekly tips. No spam. 8,000+ creators.
         </p>
 
         {submitted ? (
-          <div className="mt-6 p-3 rounded-lg bg-primary/10 text-primary font-medium text-xs">
+          <div className="mt-8 p-4 rounded-2xl bg-primary/10 text-primary font-semibold text-sm">
             ✓ You're on the list!
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="mt-6 flex gap-2 max-w-sm mx-auto">
+          <form onSubmit={handleSubmit} className="mt-8 flex gap-3 max-w-sm mx-auto">
             <Input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="your@email.com"
               required
-              className="h-10 text-sm flex-1"
+              className="h-12 text-sm flex-1 rounded-xl"
             />
-            <Button type="submit" size="sm" className="h-10 px-4 magnetic-gradient border-0 text-white font-semibold gap-1 text-xs">
-              Subscribe <ArrowRight size={14} />
+            <Button type="submit" className="h-12 px-6 rounded-xl magnetic-gradient border-0 text-white font-semibold gap-1">
+              Join <ArrowRight size={16} />
             </Button>
           </form>
         )}
