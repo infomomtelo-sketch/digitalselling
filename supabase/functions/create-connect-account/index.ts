@@ -59,7 +59,7 @@ serve(async (req) => {
     }
 
     // Create an onboarding link
-    const origin = req.headers.get("origin") || "https://dropvault.app";
+    const origin = req.headers.get("origin") || "https://shop.dropvault.live";
     const accountLink = await stripe.accountLinks.create({
       account: accountId,
       refresh_url: `${origin}/dashboard?stripe_refresh=true`,
