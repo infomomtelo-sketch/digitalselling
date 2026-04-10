@@ -91,7 +91,7 @@ export default function Partnership() {
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
         <Card className="max-w-lg w-full text-center">
           <CardContent className="pt-10 pb-10 space-y-4">
-            <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto" />
+            <CheckCircle2 className="w-16 h-16 text-primary mx-auto" />
             <h2 className="text-2xl font-bold">Application Received!</h2>
             <p className="text-muted-foreground">
               We'll review your partnership application and get back to you within 48 hours.
