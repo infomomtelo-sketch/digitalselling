@@ -10,12 +10,12 @@ const corsHeaders = {
 
 const CREDIT_PACKS = {
   "pack_50": {
-    priceId: "price_1TJzjBPO1GxEBHffnZcpy1VW",
+    priceId: "price_1TKUa6DC1mrZ8mSwKlyB7bww",
     credits: 50,
     label: "50 messages – $5",
   },
   "pack_200": {
-    priceId: "price_1TJzp9PO1GxEBHffUxlqazxd",
+    priceId: "price_1TKUeeDC1mrZ8mSwvtIPYMUE",
     credits: 200,
     label: "200 messages – $15",
   },
