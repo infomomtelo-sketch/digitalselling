@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://dropvault.app/sitemap.xml
+Sitemap: https://shop.dropvault.live/sitemap.xml
