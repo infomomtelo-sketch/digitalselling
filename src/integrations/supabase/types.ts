@@ -307,6 +307,51 @@ export type Database = {
           },
         ]
       }
+      partnership_applications: {
+        Row: {
+          additional_notes: string | null
+          audience_size: string
+          category: string
+          commission_model: string
+          company_name: string
+          contact_name: string
+          created_at: string
+          email: string
+          id: string
+          product_description: string
+          status: string
+          website: string
+        }
+        Insert: {
+          additional_notes?: string | null
+          audience_size: string
+          category: string
+          commission_model: string
+          company_name: string
+          contact_name: string
+          created_at?: string
+          email: string
+          id?: string
+          product_description: string
+          status?: string
+          website: string
+        }
+        Update: {
+          additional_notes?: string | null
+          audience_size?: string
+          category?: string
+          commission_model?: string
+          company_name?: string
+          contact_name?: string
+          created_at?: string
+          email?: string
+          id?: string
+          product_description?: string
+          status?: string
+          website?: string
+        }
+        Relationships: []
+      }
       product_likes: {
         Row: {
           created_at: string

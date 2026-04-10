@@ -37,6 +37,7 @@ import Analytics from "./pages/Analytics.tsx";
 import AdminPanel from "./pages/AdminPanel.tsx";
 import TemplateDetail from "./pages/TemplateDetail.tsx";
 import Launch from "./pages/Launch.tsx";
+import Partnership from "./pages/Partnership.tsx";
 
 const queryClient = new QueryClient();
 
@@ -72,6 +73,7 @@ const router = createBrowserRouter([
       { path: "/admin", element: <AdminPanel /> },
       { path: "/templates/:id", element: <TemplateDetail /> },
       { path: "/launch", element: <Launch /> },
+      { path: "/partnership", element: <Partnership /> },
       { path: "/privacy", element: <PrivacyPolicy /> },
       { path: "/terms", element: <TermsOfService /> },
       { path: "/cookies", element: <CookiePolicy /> },
