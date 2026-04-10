@@ -63,6 +63,7 @@ serve(async (req) => {
     }
 
     const unitAmount = Math.round(price_amount * 100);
+    const origin = req.headers.get("origin") || "https://digitalselling.lovable.app";
     const sessionParams: any = {
       customer: customerId,
       customer_email: customerId ? undefined : userEmail,
@@ -80,8 +81,8 @@ serve(async (req) => {
         },
       ],
       mode: "payment",
-      success_url: `${req.headers.get("origin")}/product/${product_id}?success=true`,
-      cancel_url: `${req.headers.get("origin")}/product/${product_id}`,
+      success_url: `${origin}/product/${product_id}?success=true`,
+      cancel_url: `${origin}/product/${product_id}`,
       metadata: { product_id, creator_id: creator_id || "" },
     };
 
