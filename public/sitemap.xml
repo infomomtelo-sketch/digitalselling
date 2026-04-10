@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://dropvault.app/</loc>
+    <loc>https://shop.dropvault.live/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://dropvault.app/creators</loc>
+    <loc>https://shop.dropvault.live/creators</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://dropvault.app/auth</loc>
+    <loc>https://shop.dropvault.live/auth</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://dropvault.app/privacy</loc>
+    <loc>https://shop.dropvault.live/privacy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://dropvault.app/terms</loc>
+    <loc>https://shop.dropvault.live/terms</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://dropvault.app/cookies</loc>
+    <loc>https://shop.dropvault.live/cookies</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
