@@ -187,9 +187,10 @@ const Launch = () => {
               />
               <Button
                 type="submit"
+                disabled={loading}
                 className="h-13 px-6 rounded-xl magnetic-gradient border-0 text-white font-semibold gap-1 shrink-0"
               >
-                Notify me <ArrowRight size={16} />
+                {loading ? <Loader2 size={16} className="animate-spin" /> : <>Notify me <ArrowRight size={16} /></>}
               </Button>
             </form>
           )}
