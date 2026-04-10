@@ -32,15 +32,33 @@ function useCountdown(target: Date) {
 const Launch = () => {
   const [email, setEmail] = useState("");
   const [joined, setJoined] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const countdown = useCountdown(LAUNCH_DATE);
 
-  const handleNotify = (e: React.FormEvent) => {
+  const handleNotify = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
-    setJoined(true);
-    toast({ title: "You're on the list! 🚀", description: "We'll notify you on launch day." });
-    setEmail("");
+    if (!email || loading) return;
+    setLoading(true);
+    try {
+      const { error } = await supabase.from("launch_emails").insert({ email });
+      if (error) {
+        if (error.code === "23505") {
+          toast({ title: "You're already on the list! 🎉", description: "We'll notify you on launch day." });
+          setJoined(true);
+        } else {
+          throw error;
+        }
+      } else {
+        setJoined(true);
+        toast({ title: "You're on the list! 🚀", description: "We'll notify you on launch day." });
+      }
+    } catch {
+      toast({ title: "Something went wrong", description: "Please try again.", variant: "destructive" });
+    } finally {
+      setLoading(false);
+      setEmail("");
+    }
   };
 
   const supporters = [
