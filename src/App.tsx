@@ -45,7 +45,9 @@ const queryClient = new QueryClient();
 function RootLayout() {
   return (
     <AuthProvider>
-      <Outlet />
+      <ErrorBoundary>
+        <Outlet />
+      </ErrorBoundary>
       <ChatWidget />
     </AuthProvider>
   );
